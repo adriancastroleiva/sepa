@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SEPA Bomberos</title>
+  <meta name="theme-color" content="#e63946"/>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png"/>
+</head>
+<body>
+  <header class="app-header">
+    <h1>SEPA · Bomberos</h1>
+    <button id="btn-install" hidden>Instalar</button>
+  </header>
+
+  <main id="view-menu" class="view active">
+    <div class="grid">
+      <button class="card" data-target="mapa">
+        <div class="emoji">🗺️</div>
+        <div class="title">Mapa de Recursos</div>
+        <div class="desc">Abrir OsmAnd / Mapas</div>
+      </button>
+      <button class="card" data-target="coord">
+        <div class="emoji">📍</div>
+        <div class="title">Registrar Coordenadas</div>
+        <div class="desc">Captura GPS 1-toque</div>
+      </button>
+      <button class="card" data-target="proced">
+        <div class="emoji">📚</div>
+        <div class="title">Procedimientos</div>
+        <div class="desc">PDFs y guías</div>
+      </button>
+      <button class="card" data-target="parte">
+        <div class="emoji">📝</div>
+        <div class="title">Toma de datos</div>
+        <div class="desc">Parte de intervención</div>
+      </button>
+    </div>
+    <div class="statusbar">
+      <span id="status-conn">● Offline</span>
+      <span id="status-sync">Pendientes: <b id="pending-count">0</b></span>
+    </div>
+  </main>
+
+  <section id="view-mapa" class="view">
+    <h2>Mapa de Recursos</h2>
+    <p>Intentar abrir <b>OsmAnd</b>. Si no funciona, se intenta con <b>geo:</b> (app de mapas predeterminada).</p>
+    <div class="actions">
+      <button id="btn-open-osmand">Abrir mapa ahora</button>
+      <button class="btn-secondary" data-back>Volver</button>
+    </div>
+  </section>
+
+  <section id="view-coord" class="view">
+    <h2>Registrar coordenadas</h2>
+    <div class="box">
+      <label>Incidente ID (opcional)</label>
+      <input type="text" id="incidente-id" placeholder="Ej. 0295-02092025">
+      <label>Notas (opcional)</label>
+      <textarea id="notas" rows="3" placeholder="Observaciones..."></textarea>
+      <div class="info" id="gps-info">Estado GPS: esperando…</div>
+      <div class="actions">
+        <button id="btn-capturar">📍 Capturar y guardar</button>
+        <button class="btn-secondary" data-back>Volver</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-proced" class="view">
+    <h2>Procedimientos</h2>
+    <div id="procedimientos-list" class="list"></div>
+    <div class="actions">
+      <button class="btn-secondary" data-back>Volver</button>
+    </div>
+  </section>
+
+  <section id="view-parte" class="view">
+    <h2>Parte de intervención</h2>
+    <form id="parte-form" class="box">
+      <label>Incidente ID</label>
+      <input type="text" name="IncidenteID" placeholder="Ej. 0295-02092025">
+      <label>Parque</label>
+      <input type="text" name="Parque" id="parte-parque" placeholder="Ej. Avilés">
+      <label>Vehículo matrícula</label>
+      <input type="text" name="VehiculoMatricula" placeholder="Ej. 1234-ABC">
+      <label>Conductor nombre</label>
+      <input type="text" name="ConductorNombre" placeholder="Nombre y apellidos">
+      <label>Conductor DNI</label>
+      <input type="text" name="ConductorDNI" placeholder="DNI">
+      <label>Descripción</label>
+      <textarea name="Descripcion" rows="3"></textarea>
+      <label>Foto (opcional)</label>
+      <input type="file" accept="image/*" capture="environment" name="Foto">
+      <div class="actions">
+        <button type="submit">Guardar parte</button>
+        <button type="button" class="btn-secondary" data-back>Volver</button>
+      </div>
+      <div id="parte-status" class="info"></div>
+    </form>
+  </section>
+
+  <footer class="app-footer">
+    <button data-home>🏠 Inicio</button>
+    <button id="btn-sync">⟳ Sincronizar</button>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
