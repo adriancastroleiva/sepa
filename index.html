@@ -119,5 +119,21 @@
     }
     document.getElementById('local-form').addEventListener('submit', SepaApp.handleLocalFormSave);
   </script>
+  <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // Hay una versión nueva: recarga para tomarla
+          location.reload();
+        }
+      });
+    });
+  });
+}
+  </script>
+  
 </body>
 </html>
