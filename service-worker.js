@@ -1,5 +1,5 @@
 // Simple service worker for offline caching
-const CACHE_NAME = 'sepa-webapp-v1';
+const CACHE_NAME = 'sepa-webapp-v1-1';
 const ASSETS = [
   './',
   './index.html',
@@ -7,7 +7,8 @@ const ASSETS = [
   './app.js',
   './manifest.webmanifest',
   './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png'
+  './assets/icons/icon-512.png',
+  './assets/icons/hydrant.svg'
 ];
 
 self.addEventListener('install', (e) => {
@@ -29,7 +30,6 @@ self.addEventListener('fetch', (e) => {
       caches.match(e.request).then((cached) => cached || fetch(e.request))
     );
   } else {
-    // Network first for cross-origin (e.g., docs)
     e.respondWith(
       fetch(e.request).then((res) => {
         const clone = res.clone();

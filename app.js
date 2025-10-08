@@ -37,6 +37,7 @@ Array.from(document.querySelectorAll('[data-back]'))
 
 // Menu actions
 qs('#menu-osmand').addEventListener('click', openOsmAnd);
+qs('#menu-pk').addEventListener('click', openGMapsPK);
 qs('#menu-coords').addEventListener('click', () => show(views.coords));
 qs('#menu-procs').addEventListener('click', () => { listProcedures(); show(views.procs); });
 qs('#menu-form').addEventListener('click', () => { resetFormUI(); show(views.form); });
@@ -59,7 +60,6 @@ function dms(val, type='lat'){
   return `${d}° ${m}' ${s}" ${hemi}`;
 }
 
-// Geolocation helper
 async function getCurrentPositionOnce(timeoutMs=8000){
   return new Promise((resolve) => {
     if (!('geolocation' in navigator)) return resolve(null);
@@ -71,31 +71,65 @@ async function getCurrentPositionOnce(timeoutMs=8000){
   });
 }
 
-// 1) Open OsmAnd with intent + fallbacks
+// 1) Recursos Hídricos (abrir OsmAnd normal con múltiples estrategias)
 async function openOsmAnd(){
-  const coords = await getCurrentPositionOnce(5000);
+  const coords = await getCurrentPositionOnce(6000);
+  const lat = coords?.latitude ?? 43.36;
+  const lon = coords?.longitude ?? -5.84;
+  const label = encodeURIComponent('SEPA');
+
+  const tries = [
+    // Intent con esquema osmand y paquete net.osmand
+    `intent://show_map?lat=${lat}&lon=${lon}&z=16#Intent;scheme=osmand;action=android.intent.action.VIEW;package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`,
+    // Intent con geo y paquete net.osmand
+    `intent://${lat},${lon}?q=${lat},${lon}(${label})#Intent;scheme=geo;action=android.intent.action.VIEW;package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`,
+    // Intent con S.uri
+    `intent://#Intent;scheme=geo;action=android.intent.action.VIEW;package=net.osmand;S.uri=geo:${lat},${lon}?q=${lat},${lon}(${label});end`,
+  ];
+
+  const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(${label})`;
+  let delay = 0;
+  for (const u of tries){
+    setTimeout(()=>{ try{ window.location.href = u; }catch{} }, delay);
+    delay += 500;
+  }
+  setTimeout(()=>{ window.location.href = geoUri; }, delay + 300);
+}
+
+// 2) Puntos Kilométricos — abrir My Maps en view y centrado en ubicación actual
+const GMAPS_PK_LINK = "https://www.google.com/maps/d/u/0/viewer?hl=es&mid=1QgMMRz19UxEE1yY9T1Sptjj-2aQvHRs&ll=43.137755721077234%2C-5.832713974846781&z=8";
+async function openGMapsPK(){
+  const coords = await getCurrentPositionOnce(7000);
   const lat = coords?.latitude ?? 43.36;
   const lon = coords?.longitude ?? -5.84;
 
-  // Usamos INTENT con scheme geo:, package=net.osmand para abrir el mapa directamente en OsmAnd normal
-  const label = encodeURIComponent('Ubicación');
-  const intentGeo = `intent://${lat},${lon}?q=${lat},${lon}(${label})#Intent;scheme=geo;action=android.intent.action.VIEW;package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`;
+  let url = (GMAPS_PK_LINK || '').trim();
+  if (!url){ alert('Falta el enlace de My Maps para PK'); return; }
+  try {
+    const u = new URL(url);
+    // path -> /maps/d/view
+    u.pathname = u.pathname.replace(/\/d\/u\/\d+\/viewer/,'/d/view').replace('/d/viewer','/d/view').replace('/d/edit','/d/view');
+    // centrar en posición actual + zoom
+    u.searchParams.set('ll', `${lat},${lon}`);
+    u.searchParams.set('z', '15');
+    u.searchParams.set('hl', 'es');
+    url = u.toString();
+  } catch(_e){ /* ignore */ }
+
+  const intent = `intent://${url.replace(/^https?:\/\//,'')}` +
+                 `#Intent;scheme=https;package=com.google.android.apps.maps;end`;
+  const geo = `geo:${lat},${lon}?q=${lat},${lon}(PK)`;
 
   try {
-    // Abrir directamente la app
-    window.location.replace(intentGeo);
-    // Fallback por si el navegador no soporta intent URIs
-    setTimeout(() => {
-      const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(${label})`;
-      window.location.href = geoUri;
-    }, 800);
-  } catch (_e) {
-    const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(${label})`;
-    window.location.href = geoUri;
+    window.location.href = intent;
+    setTimeout(()=>{ window.location.href = url; }, 800);
+    setTimeout(()=>{ window.location.href = geo; }, 1600);
+  } catch(_e){
+    window.location.href = url;
   }
 }
 
-// 2) Registrar coordenadas
+// ===== Registrar coordenadas
 qs('#btn-getloc').addEventListener('click', async ()=>{
   qs('#lat-dec').value = '';
   qs('#lon-dec').value = '';
@@ -119,16 +153,11 @@ qs('#btn-save-coords').addEventListener('click', async ()=>{
   if(!latd || !lond){ alert('Primero obtén la ubicación.'); return; }
   const rec = { id: crypto.randomUUID(), ts: new Date().toISOString(), name, latd, lond, latm, lonm };
   await db.coords.add(rec.id, rec);
-
-  // Future: Google Sheets webhook (Apps Script) paste URL below
-  // const SHEETS_WEB_APP_URL = "";
-  // if (SHEETS_WEB_APP_URL) fetch(SHEETS_WEB_APP_URL, { method:'POST', body: JSON.stringify(rec) });
-
   alert('Coordenadas guardadas en el dispositivo.');
   qs('#inc-name').value = '';
 });
 
-// 3) Procedimientos
+// ===== Procedimientos
 async function listProcedures(){
   const ul = qs('#proc-ul');
   ul.innerHTML = '';
@@ -157,7 +186,7 @@ async function listProcedures(){
   }
 }
 
-// 4) Toma de datos (form local + fotos)
+// ===== Toma de datos (form local + fotos)
 const entriesEl = qs('#entries');
 qs('#btn-add-entry').addEventListener('click', ()=> addEntry());
 qs('#btn-clear-form').addEventListener('click', ()=> resetFormUI());
@@ -251,7 +280,7 @@ qs('#photo-input').addEventListener('change', async (e)=>{
   }
 });
 
-// 5) Ver datos guardados (sólo registros de opción 4)
+// Ver datos guardados
 qs('#btn-export-json').addEventListener('click', async ()=>{
   const items = await db.forms.getAll();
   const blob = new Blob([JSON.stringify(items, null, 2)], {type:'application/json'});
@@ -261,7 +290,7 @@ qs('#btn-export-json').addEventListener('click', async ()=>{
   a.click();
 });
 qs('#btn-clear-all').addEventListener('click', async ()=>{
-  if(!confirm('¿Borrar todos los registros de la opción 4?')) return;
+  if(!confirm('¿Borrar todos los registros de la opción 5?')) return;
   await db.forms.clear();
   renderSaved();
 });
@@ -306,7 +335,7 @@ function escapeHtml(str){
 // ===== IndexedDB tiny wrapper =====
 const db = (function(){
   const DB_NAME = 'sepa-webapp';
-  const DB_VER = 1;
+  const DB_VER = 2;
   let p;
   function open(){
     if (p) return p;
