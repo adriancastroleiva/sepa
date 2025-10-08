@@ -1,113 +1,140 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>SEPA Bomberos</title>
-  <meta name="theme-color" content="#e63946"/>
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" sizes="192x192" href="assets/icons/icon-192.png">
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SEPA Webapp — Menú principal</title>
+  <style>
+    :root { --bg:#0b1220; --card:#121a2b; --text:#e7eefc; --accent:#3aa0ff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); }
+    header { padding: 20px; background: #0d1527; border-bottom: 1px solid #1e2b4a; }
+    h1 { margin:0; font-size: 20px; }
+    main { padding: 20px; display: grid; gap: 16px; max-width: 680px; margin: 0 auto; }
+    .card { background: var(--card); border:1px solid #1c2742; border-radius: 14px; padding: 16px; }
+    .btn { display: inline-block; padding: 14px 16px; border-radius: 12px; border:1px solid #29436b; background: #17233a; color: var(--text); text-decoration: none; cursor: pointer; font-weight: 600; }
+    .btn-primary { background: var(--accent); color:#041225; border-color:#2a7ed1; }
+    .muted { opacity:.8; font-size: 13px; }
+    .stack { display:flex; gap:10px; flex-wrap:wrap; }
+  </style>
 </head>
 <body>
-  <header class="app-header">
-    <h1>SEPA · Bomberos</h1>
-    <button id="btn-install" hidden>Instalar</button>
+  <header>
+    <h1>SEPA Webapp — Menú principal</h1>
   </header>
 
-  <main id="view-menu" class="view active">
-    <div class="grid">
-      <button class="card" data-target="mapa">
-        <div class="emoji">🗺️</div>
-        <div class="title">Mapa de Recursos</div>
-        <div class="desc">Abrir OsmAnd / Mapas</div>
-      </button>
-      <button class="card" data-target="coord">
-        <div class="emoji">📍</div>
-        <div class="title">Registrar Coordenadas</div>
-        <div class="desc">Captura GPS 1-toque</div>
-      </button>
-      <button class="card" data-target="proced">
-        <div class="emoji">📚</div>
-        <div class="title">Procedimientos</div>
-        <div class="desc">PDFs y guías</div>
-      </button>
-      <button class="card" data-target="parte">
-        <div class="emoji">📝</div>
-        <div class="title">Toma de datos</div>
-        <div class="desc">Parte de intervención</div>
-      </button>
+  <main>
+    <!-- PRIMER BOTÓN: abrir directamente OsmAnd -->
+    <div class="card">
+      <p class="muted">Navegación</p>
+      <button id="btn-open-osmand" class="btn btn-primary">Abrir en OsmAnd (mapa)</button>
+      <p class="muted">Abre OsmAnd directamente con la ubicación configurada. Solo en Android.</p>
     </div>
-    <div class="statusbar">
-      <span id="status-conn">● Offline</span>
-      <span id="status-sync">Pendientes: <b id="pending-count">0</b></span>
+
+    <!-- Otros botones de ejemplo del menú (colócalos debajo) -->
+    <div class="card stack">
+      <a class="btn" href="#">Parte diario</a>
+      <a class="btn" href="#">Incidencias</a>
+      <a class="btn" href="#">Medios</a>
+    </div>
+
+    <div class="card">
+      <p class="muted"><strong>Configuración rápida</strong></p>
+      <div class="stack">
+        <button id="btn-set-cfg-oviedo" class="btn">Usar Oviedo</button>
+        <button id="btn-set-cfg-sepa" class="btn">Usar SEPA Central</button>
+        <button id="btn-reset-cfg" class="btn">Valores por defecto</button>
+      </div>
+      <p id="cfg-info" class="muted" style="margin-top:8px"></p>
     </div>
   </main>
 
-  <section id="view-mapa" class="view">
-    <h2>Mapa de Recursos</h2>
-    <p>Intentar abrir <b>OsmAnd</b>. Si no funciona, se intenta con <b>geo:</b> (app de mapas predeterminada).</p>
-    <div class="actions">
-      <button id="btn-open-osmand">Abrir mapa ahora</button>
-      <button class="btn-secondary" data-back>Volver</button>
-    </div>
-  </section>
+  <script>
+  // ===== Configuración =====
+  // Puedes inicializar cfg desde tu app; aquí dejamos un fallback editable.
+  window.cfg = window.cfg || {
+    latDefault: 43.36029,   // Oviedo
+    lonDefault: -5.84476,   // Oviedo
+  };
 
-  <section id="view-coord" class="view">
-    <h2>Registrar coordenadas</h2>
-    <div class="box">
-      <label>Incidente ID (opcional)</label>
-      <input type="text" id="incidente-id" placeholder="Ej. 0295-02092025">
-      <label>Notas (opcional)</label>
-      <textarea id="notas" rows="3" placeholder="Observaciones..."></textarea>
-      <div class="info" id="gps-info">Estado GPS: esperando…</div>
-      <div class="actions">
-        <button id="btn-capturar">📍 Capturar y guardar</button>
-        <button class="btn-secondary" data-back>Volver</button>
-      </div>
-    </div>
-  </section>
+  // Persistimos en localStorage para tus pruebas (opcional)
+  const saveCfg = () => localStorage.setItem('sepa_cfg', JSON.stringify({ latDefault: cfg.latDefault, lonDefault: cfg.lonDefault }));
+  const loadCfg = () => { try { const s = localStorage.getItem('sepa_cfg'); if (s) Object.assign(cfg, JSON.parse(s)); } catch(_){} };
+  const renderCfg = () => {
+    const el = document.getElementById('cfg-info');
+    if (!el) return;
+    el.textContent = `Lat: ${getLat()}  Lon: ${getLon()}  (zoom ${getZoom()})`;
+  };
 
-  <section id="view-proced" class="view">
-    <h2>Procedimientos</h2>
-    <div id="procedimientos-list" class="list"></div>
-    <div class="actions">
-      <button class="btn-secondary" data-back>Volver</button>
-    </div>
-  </section>
+  loadCfg();
 
-  <section id="view-parte" class="view">
-    <h2>Parte de intervención</h2>
-    <form id="parte-form" class="box">
-      <label>Incidente ID</label>
-      <input type="text" name="IncidenteID" placeholder="Ej. 0295-02092025">
-      <label>Parque</label>
-      <input type="text" name="Parque" id="parte-parque" placeholder="Ej. Avilés">
-      <label>Vehículo matrícula</label>
-      <input type="text" name="VehiculoMatricula" placeholder="Ej. 1234-ABC">
-      <label>Conductor nombre</label>
-      <input type="text" name="ConductorNombre" placeholder="Nombre y apellidos">
-      <label>Conductor DNI</label>
-      <input type="text" name="ConductorDNI" placeholder="DNI">
-      <label>Descripción</label>
-      <textarea name="Descripcion" rows="3"></textarea>
-      <label>Foto (opcional)</label>
-      <input type="file" accept="image/*" capture="environment" name="Foto">
-      <div class="actions">
-        <button type="submit">Guardar parte</button>
-        <button type="button" class="btn-secondary" data-back>Volver</button>
-      </div>
-      <div id="parte-status" class="info"></div>
-    </form>
-  </section>
+  // ===== Utilidades =====
+  const qs = s => document.querySelector(s);
+  const getLat = () => (typeof cfg !== 'undefined' && cfg.latDefault != null ? cfg.latDefault : 43.36);
+  const getLon = () => (typeof cfg !== 'undefined' && cfg.lonDefault != null ? cfg.lonDefault : -5.84);
+  const getZoom = () => 16;
 
-  <footer class="app-footer">
-    <button data-home>🏠 Inicio</button>
-    <button id="btn-sync">⟳ Sincronizar</button>
-  </footer>
+  // ===== Construcción de intents =====
+  function buildIntentOsmandPlus(lat, lon, z) {
+    return `intent://show_map?lat=${lat}&lon=${lon}&z=${z}` +
+           `#Intent;scheme=osmand;package=net.osmand.plus;` +
+           `component=net.osmand.plus/net.osmand.plus.activities.MapActivity;end`;
+  }
+  function buildIntentOsmandFree(lat, lon, z) {
+    return `intent://show_map?lat=${lat}&lon=${lon}&z=${z}` +
+           `#Intent;scheme=osmand;package=net.osmand;` +
+           `component=net.osmand/net.osmand.plus.activities.MapActivity;end`;
+  }
+  function buildIntentGeoPlus(lat, lon, z) {
+    return `intent://${lat},${lon}?z=${z}` +
+           `#Intent;scheme=geo;package=net.osmand.plus;` +
+           `component=net.osmand.plus/net.osmand.plus.activities.MapActivity;end`;
+  }
 
-  <script src="config.js"></script>
-  <script src="app.js"></script>
+  // ===== Apertura encadenada =====
+  function openOsmAnd(lat, lon, z) {
+    const intentPlus = buildIntentOsmandPlus(lat, lon, z);
+    const intentFree = buildIntentOsmandFree(lat, lon, z);
+    const intentGeoP = buildIntentGeoPlus(lat, lon, z);
+    const marketPlus = 'market://details?id=net.osmand.plus';
+
+    try {
+      // Lanzamos primero OsmAnd+ directamente
+      location.href = intentPlus;
+      // Si no abre, probamos gratuitos y geo forzado, luego Play Store
+      setTimeout(() => { location.href = intentFree; }, 700);
+      setTimeout(() => { location.href = intentGeoP; }, 1400);
+      setTimeout(() => { location.href = marketPlus; }, 2100);
+    } catch (e) {
+      location.href = intentGeoP;
+    }
+  }
+
+  // ===== Enlaces del menú =====
+  qs('#btn-open-osmand')?.addEventListener('click', () => {
+    const lat = getLat();
+    const lon = getLon();
+    const z = getZoom();
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    if (!isAndroid) {
+      alert('Esta función abre OsmAnd y solo está disponible en Android.');
+      return;
+    }
+    openOsmAnd(lat, lon, z);
+  });
+
+  // ===== Botones de configuración rápida (demo) =====
+  qs('#btn-set-cfg-oviedo')?.addEventListener('click', () => {
+    cfg.latDefault = 43.36029; cfg.lonDefault = -5.84476; saveCfg(); renderCfg();
+  });
+  qs('#btn-set-cfg-sepa')?.addEventListener('click', () => {
+    cfg.latDefault = 43.3739; cfg.lonDefault = -5.818; saveCfg(); renderCfg();
+  });
+  qs('#btn-reset-cfg')?.addEventListener('click', () => {
+    delete cfg.latDefault; delete cfg.lonDefault; localStorage.removeItem('sepa_cfg'); renderCfg();
+  });
+
+  renderCfg();
+  </script>
 </body>
 </html>
