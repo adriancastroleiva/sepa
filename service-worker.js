@@ -1,5 +1,5 @@
-// Service worker v1.4 (force refresh)
-const CACHE_NAME = 'sepa-webapp-v1-4';
+// Simple service worker for offline caching
+const CACHE_NAME = 'sepa-webapp-v1';
 const ASSETS = [
   './',
   './index.html',
@@ -7,8 +7,7 @@ const ASSETS = [
   './app.js',
   './manifest.webmanifest',
   './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png',
-  './assets/icons/hydrant.svg'
+  './assets/icons/icon-512.png'
 ];
 
 self.addEventListener('install', (e) => {
@@ -26,8 +25,17 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (url.origin === location.origin) {
-    e.respondWith(caches.match(e.request).then((cached) => cached || fetch(e.request)));
+    e.respondWith(
+      caches.match(e.request).then((cached) => cached || fetch(e.request))
+    );
   } else {
-    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+    // Network first for cross-origin (e.g., docs)
+    e.respondWith(
+      fetch(e.request).then((res) => {
+        const clone = res.clone();
+        caches.open(CACHE_NAME).then((c) => c.put(e.request, clone)).catch(()=>{});
+        return res;
+      }).catch(() => caches.match(e.request))
+    );
   }
 });

@@ -37,7 +37,6 @@ Array.from(document.querySelectorAll('[data-back]'))
 
 // Menu actions
 qs('#menu-osmand').addEventListener('click', openOsmAnd);
-qs('#menu-pk').addEventListener('click', openGMapsPK);
 qs('#menu-coords').addEventListener('click', () => show(views.coords));
 qs('#menu-procs').addEventListener('click', () => { listProcedures(); show(views.procs); });
 qs('#menu-form').addEventListener('click', () => { resetFormUI(); show(views.form); });
@@ -60,6 +59,7 @@ function dms(val, type='lat'){
   return `${d}° ${m}' ${s}" ${hemi}`;
 }
 
+// Geolocation helper
 async function getCurrentPositionOnce(timeoutMs=8000){
   return new Promise((resolve) => {
     if (!('geolocation' in navigator)) return resolve(null);
@@ -71,44 +71,33 @@ async function getCurrentPositionOnce(timeoutMs=8000){
   });
 }
 
-// 1) Recursos Hídricos (OsmAnd): usar osmand:// primero; fallback geo (evita Play Store)
+// 1) Open OsmAnd with intent + fallbacks
 async function openOsmAnd(){
+
   const coords = await getCurrentPositionOnce(5000);
   const lat = coords?.latitude ?? 43.36;
   const lon = coords?.longitude ?? -5.84;
-  const osmand = `osmand://show_map?lat=${lat}&lon=${lon}&z=16`;
-  const geo = `geo:${lat},${lon}?q=${lat},${lon}(Recursos%20H%C3%ADdricos)`;
-  window.location.href = osmand;
-  setTimeout(()=>{ window.location.href = geo; }, 800);
-}
 
-// 2) Puntos Kilométricos — usar maps.app.goo.gl con /view; fallback https y geo
-const GMAPS_PK_LINK = "https://www.google.com/maps/d/u/0/viewer?hl=es&mid=1QgMMRz19UxEE1yY9T1Sptjj-2aQvHRs&ll=43.137755721077234%2C-5.832713974846781&z=8";
-async function openGMapsPK(){
-  const coords = await getCurrentPositionOnce(7000);
-  const lat = coords?.latitude ?? 43.36;
-  const lon = coords?.longitude ?? -5.84;
+  // Intent explícito para OsmAnd NORMAL (forzar paquete net.osmand)
+  const intentUri =
+    `intent://show_map?lat=${lat}&lon=${lon}&z=16` +
+    `#Intent;scheme=osmand;action=android.intent.action.VIEW;` +
+    `package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`;
 
-  let base = (GMAPS_PK_LINK || '').trim();
-  if (!base){ alert('Falta el enlace de My Maps para PK'); return; }
+  // Forzamos el intent directo y, si no está instalada la app, fallback a geo:
   try {
-    const u = new URL(base);
-    u.pathname = u.pathname.replace(/\/d\/u\/\d+\/viewer/,'/d/view').replace('/d/viewer','/d/view').replace('/d/edit','/d/view');
-    u.searchParams.set('ll', `${lat},${lon}`);
-    u.searchParams.set('z', '15');
-    u.searchParams.set('hl', 'es');
-    base = u.toString();
-  } catch(_e){ /* ignore */ }
-
-  // Deep link recomendado por Google: maps.app.goo.gl con 'link='
-  const deep = `https://maps.app.goo.gl/?link=${encodeURIComponent(base)}`;
-
-  window.location.href = deep;
-  setTimeout(()=>{ window.location.href = base; }, 900);
-  setTimeout(()=>{ window.location.href = `geo:${lat},${lon}?q=${lat},${lon}(PK)`; }, 1800);
+    window.location.replace(intentUri);
+    setTimeout(() => {
+      const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
+      window.location.href = geoUri;
+    }, 900);
+  } catch (_e) {
+    const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
+    window.location.href = geoUri;
+  }
 }
 
-// ===== Registrar coordenadas
+// 2) Registrar coordenadas
 qs('#btn-getloc').addEventListener('click', async ()=>{
   qs('#lat-dec').value = '';
   qs('#lon-dec').value = '';
@@ -132,11 +121,16 @@ qs('#btn-save-coords').addEventListener('click', async ()=>{
   if(!latd || !lond){ alert('Primero obtén la ubicación.'); return; }
   const rec = { id: crypto.randomUUID(), ts: new Date().toISOString(), name, latd, lond, latm, lonm };
   await db.coords.add(rec.id, rec);
+
+  // Future: Google Sheets webhook (Apps Script) paste URL below
+  // const SHEETS_WEB_APP_URL = "";
+  // if (SHEETS_WEB_APP_URL) fetch(SHEETS_WEB_APP_URL, { method:'POST', body: JSON.stringify(rec) });
+
   alert('Coordenadas guardadas en el dispositivo.');
   qs('#inc-name').value = '';
 });
 
-// ===== Procedimientos
+// 3) Procedimientos
 async function listProcedures(){
   const ul = qs('#proc-ul');
   ul.innerHTML = '';
@@ -165,7 +159,7 @@ async function listProcedures(){
   }
 }
 
-// ===== Toma de datos (form local + fotos)
+// 4) Toma de datos (form local + fotos)
 const entriesEl = qs('#entries');
 qs('#btn-add-entry').addEventListener('click', ()=> addEntry());
 qs('#btn-clear-form').addEventListener('click', ()=> resetFormUI());
@@ -259,7 +253,7 @@ qs('#photo-input').addEventListener('change', async (e)=>{
   }
 });
 
-// Ver datos guardados
+// 5) Ver datos guardados (sólo registros de opción 4)
 qs('#btn-export-json').addEventListener('click', async ()=>{
   const items = await db.forms.getAll();
   const blob = new Blob([JSON.stringify(items, null, 2)], {type:'application/json'});
@@ -269,7 +263,7 @@ qs('#btn-export-json').addEventListener('click', async ()=>{
   a.click();
 });
 qs('#btn-clear-all').addEventListener('click', async ()=>{
-  if(!confirm('¿Borrar todos los registros de la opción 5?')) return;
+  if(!confirm('¿Borrar todos los registros de la opción 4?')) return;
   await db.forms.clear();
   renderSaved();
 });
@@ -314,7 +308,7 @@ function escapeHtml(str){
 // ===== IndexedDB tiny wrapper =====
 const db = (function(){
   const DB_NAME = 'sepa-webapp';
-  const DB_VER = 4;
+  const DB_VER = 1;
   let p;
   function open(){
     if (p) return p;
