@@ -64,15 +64,44 @@ function refreshPending(){
 refreshPending();
 
 // ---- MAPA (OsmAnd / geo:) ----
-qs('#btn-open-osmand')?.addEventListener('click', ()=>{
+// ---- MAPA (OsmAnd con varias rutas + fallback geo:) ----
+const tryOpen = (url) => {
+  // usar <a> invisible ayuda en PWA standalone
+  let a = document.getElementById('open-osmand-link');
+  if (!a) {
+    a = document.createElement('a');
+    a.id = 'open-osmand-link';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+  }
+  a.href = url;
+  a.target = '_blank';
+  a.click();
+};
+
+document.getElementById('btn-open-osmand')?.addEventListener('click', () => {
   const lat = cfg.latDefault ?? 43.36;
-  const lon = cfg.lonDefault ?? -5.84;
-  const osmand = `osmand://show_map?lat=${lat}&lon=${lon}&z=16`;
-  const geo = `geo:${lat},${lon}`;
-  // Try OsmAnd first, then fallback
-  window.location.href = osmand;
-  setTimeout(()=>{ window.location.href = geo; }, 600);
+  const lon = cfg.lonDefault ?? -5.85;
+
+  // 1) esquema nativo OsmAnd
+  const osmandUrl = `osmand://show_map?lat=${lat}&lon=${lon}&z=16`;
+
+  // 2) intents (normal y plus)
+  const intentOsmand =
+    `intent://show_map?lat=${lat}&lon=${lon}&z=16#Intent;scheme=osmand;package=net.osmand;end;`;
+  const intentOsmandPlus =
+    `intent://show_map?lat=${lat}&lon=${lon}&z=16#Intent;scheme=osmand;package=net.osmand.plus;end;`;
+
+  // 3) geo: fallback universal
+  const geo = `geo:${lat},${lon}?z=16`;
+
+  // intento escalonado
+  tryOpen(osmandUrl);
+  setTimeout(() => tryOpen(intentOsmand), 400);
+  setTimeout(() => tryOpen(intentOsmandPlus), 800);
+  setTimeout(() => { window.location.href = geo; }, 1200);
 });
+
 
 // ---- COORDENADAS ----
 const gpsInfo = qs('#gps-info');
