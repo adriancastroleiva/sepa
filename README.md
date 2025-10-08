@@ -1,23 +1,9 @@
-# SEPA WebApp (PWA)
+# SEPA Bomberos — PWA (forzada a OsmAnd Plus, sin abrir Play Store)
 
-Webapp instalable pensada para Android, desplegable en GitHub Pages.
+- Botón de **Mapa de Recursos** es un `<a href="intent://...">` con `scheme=geo` y `package=net.osmand.plus`.
+- Así Android lanza **OsmAnd+ directo** (sin chooser y sin Play Store).
+- Fallback `geo:` si el Intent no salta en ~700 ms.
 
-## Funciones
-1. **Hidrantes y Puntos de agua** → Lanza la app Android **OsmAnd Plus** (con fallback a OsmAnd normal y `geo:`).
-2. **Puntos Kilométricos** → Abre el mapa compartido de **Google My Maps** (intenta usar la app de Google Maps).
-3. **Registrar Coordenadas** → Obtiene coordenadas (decimal y sexagesimal). Guarda localmente (IndexedDB). *Pendiente* enviar a Google Sheets.
-4. **Procedimientos (PDF)** → Sección vacía para enlazar documentos PDF.
-5. **Toma de datos** → Formulario local (IndexedDB) con campos: Nombre, DNI, Dirección, Vehículo, Matrícula y Fotos (múltiples).
-6. **Ver datos guardados** → Lista los registros almacenados localmente con fotos.
+Despliegue: subir a GitHub Pages/Netlify. Editar `config.js` si cambian parque/lat/lon o si algún móvil usa `net.osmand`.
 
-## Despliegue en GitHub Pages
-- Rama `main`: sube todo el contenido a la raíz o a `/docs`.
-- Activa **GitHub Pages** y elige la ruta correcta.
-- Abre la URL publicada y usa "Añadir a pantalla de inicio" en Android.
-
-## Notas sobre Android intents
-- OsmAnd Plus: paquete `net.osmand.plus`. Fallback a `net.osmand` y `geo:`.
-- My Maps a veces abre en navegador; intentamos abrir con `com.google.android.apps.maps` via `intent://...` y luego fallback a `https://`.
-
-## Google Sheets (pendiente)
-- Implementar POST a Apps Script o API de Sheets en `app.js` dentro de `handleGPS()`.
+Generado: 2025-10-08T16:18:00.024729Z

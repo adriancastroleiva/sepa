@@ -1,10 +1,10 @@
 {
-  "name": "SEPA WebApp",
+  "name": "SEPA Bomberos",
   "short_name": "SEPA",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1450C8",
+  "background_color": "#0b132b",
+  "theme_color": "#e63946",
   "icons": [
     {
       "src": "assets/icons/icon-192.png",
