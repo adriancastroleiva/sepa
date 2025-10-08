@@ -1,162 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>SEPA WebApp</title>
-  <link rel="manifest" href="./manifest.webmanifest">
-  <meta name="theme-color" content="#0f766e" />
-  <link rel="stylesheet" href="./styles.css" />
-  <link rel="icon" href="./assets/icons/icon-192.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SEPA – Webapp</title>
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230f172a'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='28' fill='white' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--muted:#334155;--accent:#22c55e;--txt:#e5e7eb}
+    html,body{margin:0;height:100%;background:#0b1220;color:var(--txt);font-family:system-ui}
+    .wrap{max-width:980px;margin:0 auto;padding:16px}
+    .btn{display:flex;align-items:center;gap:12px;background:#111827;border:1px solid #1f2937;border-radius:16px;padding:16px;text-decoration:none;color:var(--txt)}
+    .btn:hover{border-color:#334155}
+    .icon{width:36px;height:36px;display:grid;place-items:center;background:#0b1220;border:1px solid #1f2937;border-radius:10px}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+  </style>
 </head>
 <body>
-  <header class="app-header">
-    <h1>SEPA</h1>
-    <button id="btn-install" class="btn small" hidden>Instalar</button>
-  </header>
-
-  <main id="view-home" class="view active">
-    <section class="menu-grid">
-      <button class="card" id="menu-osmand">
-        <div class="card-ico">🗺️</div>
-        <div class="card-title">1. Mapa de recursos</div>
-        <div class="card-desc">Abrir OsmAnd</div>
-      </button>
-
-      <button class="card" id="menu-coords">
-        <div class="card-ico">📍</div>
-        <div class="card-title">2. Registrar Coordenadas</div>
-        <div class="card-desc">Capturar & guardar</div>
-      </button>
-
-      <button class="card" id="menu-procs">
-        <div class="card-ico">📚</div>
-        <div class="card-title">3. Procedimientos</div>
-        <div class="card-desc">Repositorio local</div>
-      </button>
-
-      <button class="card" id="menu-form">
-        <div class="card-ico">📝</div>
-        <div class="card-title">4. Toma de datos</div>
-        <div class="card-desc">Formulario + fotos</div>
-      </button>
-
-      <button class="card" id="menu-view">
-        <div class="card-ico">📂</div>
-        <div class="card-title">5. Ver datos guardados</div>
-        <div class="card-desc">Registros locales</div>
-      </button>
-    </section>
-  </main>
-
-  <!-- Registrar Coordenadas -->
-  <section id="view-coords" class="view">
-    <header class="subheader">
-      <button class="btn ghost" data-back>← Volver</button>
-      <h2>Registrar Coordenadas</h2>
-    </header>
-
-    <div class="card pad">
-      <div class="row">
-        <label>Nombre de la incidencia</label>
-        <input id="inc-name" type="text" placeholder="Ej. Incendio Forestal en Genestoso">
-      </div>
-
-      <div class="row">
-        <button id="btn-getloc" class="btn">Obtener ubicación actual</button>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <label>Latitud (decimal)</label>
-          <input id="lat-dec" type="text" inputmode="decimal" readonly>
-        </div>
-        <div>
-          <label>Longitud (decimal)</label>
-          <input id="lon-dec" type="text" inputmode="decimal" readonly>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <label>Latitud (sexagesimal)</label>
-          <input id="lat-dms" type="text" readonly>
-        </div>
-        <div>
-          <label>Longitud (sexagesimal)</label>
-          <input id="lon-dms" type="text" readonly>
-        </div>
-      </div>
-
-      <div class="row end">
-        <button id="btn-save-coords" class="btn success">Guardar</button>
-      </div>
-
-      <p class="muted small">* Próximamente también se enviará a Google Sheets (URL pendiente).</p>
+  <div class="wrap">
+    <h1>SEPA – Webapp</h1>
+    <div class="grid">
+      <a class="btn" id="btn-agua"><span class="icon">🚰</span>1. Hidrantes y Puntos de agua</a>
+      <a class="btn" id="btn-pk"><span class="icon">📍</span>2. Puntos kilométricos</a>
+      <a class="btn" id="btn-coords"><span class="icon">🧭</span>3. Registrar Coordenadas</a>
+      <a class="btn" id="btn-proc"><span class="icon">📚</span>4. Procedimientos</a>
+      <a class="btn" id="btn-form"><span class="icon">📝</span>5. Toma de datos</a>
+      <a class="btn" id="btn-view"><span class="icon">📂</span>6. Ver Datos guardados</a>
     </div>
-  </section>
-
-  <!-- Procedimientos -->
-  <section id="view-procs" class="view">
-    <header class="subheader">
-      <button class="btn ghost" data-back>← Volver</button>
-      <h2>Procedimientos</h2>
-    </header>
-
-    <div id="proc-list" class="card pad">
-      <p class="muted">Coloca archivos en <code>/procedimientos/</code> y añade sus nombres en <code>procedimientos/index.json</code> para listarlos aquí.</p>
-      <ul id="proc-ul"></ul>
-    </div>
-  </section>
-
-  <!-- Toma de datos -->
-  <section id="view-form" class="view">
-    <header class="subheader">
-      <button class="btn ghost" data-back>← Volver</button>
-      <h2>Toma de datos</h2>
-    </header>
-
-    <div class="card pad">
-      <div id="entries"></div>
-      <button id="btn-add-entry" class="btn">Añadir entrada</button>
-
-      <div class="row">
-        <label>Fotografías (puedes hacer varias)</label>
-        <input id="photo-input" type="file" accept="image/*" capture="environment" multiple>
-        <div id="photo-preview" class="thumbs"></div>
-      </div>
-
-      <div class="row end gap">
-        <button id="btn-clear-form" class="btn ghost">Limpiar</button>
-        <button id="btn-save-form" class="btn success">Finalizar y guardar</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Ver datos guardados (solo opción 4) -->
-  <section id="view-saved" class="view">
-    <header class="subheader">
-      <button class="btn ghost" data-back>← Volver</button>
-      <h2>Registros guardados</h2>
-    </header>
-
-    <div id="saved-list" class="list"></div>
-    <div class="row end gap pad">
-      <button id="btn-export-json" class="btn">Exportar JSON</button>
-      <button id="btn-clear-all" class="btn danger">Borrar todo</button>
-    </div>
-  </section>
-
-  <footer class="app-footer">
-    <button class="link" id="btn-about">Acerca de</button>
-  </footer>
-
-  <dialog id="dlg-about">
-    <h3>SEPA WebApp</h3>
-    <p>v1.0 · PWA instalable · Datos locales (IndexedDB). Funciona sin conexión (salvo OsmAnd y futuro Google Sheets).</p>
-    <button class="btn" id="btn-close-about">Cerrar</button>
-  </dialog>
-
-  <script src="./app.js" type="module"></script>
+  </div>
+<script>
+function repoRoot(){return window.location.origin + window.location.pathname.replace(/\/?$/,'/');}
+function openKmz(filename){
+  const fileUrl = repoRoot()+filename;
+  const intent = `intent://${encodeURIComponent(fileUrl).replace(/^https%3A%2F%2F/,'')}#Intent;scheme=https;package=com.google.android.apps.maps;end`;
+  window.location.href = intent;
+  setTimeout(()=>{window.location.href=fileUrl;},1000);
+}
+document.getElementById('btn-agua').onclick=(e)=>{e.preventDefault();openKmz('agua.kmz');};
+document.getElementById('btn-pk').onclick=(e)=>{e.preventDefault();openKmz('pk.kmz');};
+</script>
 </body>
 </html>
