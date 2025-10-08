@@ -55,7 +55,19 @@ async function handleGPS() {
     out.innerHTML = `<b>Decimal:</b> ${latDec}, ${lonDec}<br><b>Sexagesimal:</b> ${latDMS} — ${lonDMS}`;
     const payload = { name: name || null, latitude, longitude, lat_decimal: latDec, lon_decimal: lonDec, lat_dms: latDMS, lon_dms: lonDMS, createdAt: new Date().toISOString() };
     await SepaDB.addGPS(payload);
-    // TODO: Google Sheets endpoint
+  // Enviar a Google Sheets
+try {
+  const response = await fetch('https://script.google.com/macros/s/AKfycbx8N1Q5Yn0rY3WF8W-xj5ouuxzjFDSuvGSkL6afV0XXjxuN-vbvYBHNoLGeCgDd5w/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  console.log('Datos enviados a Sheets');
+} catch (err) {
+  console.error('Error al enviar a Sheets:', err);
+}
+
   } catch(e) { out.textContent = 'Error: ' + e.message; }
 }
 
