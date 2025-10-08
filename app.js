@@ -71,31 +71,30 @@ async function getCurrentPositionOnce(timeoutMs=8000){
   });
 }
 
-// 1) Open OsmAnd with intent + fallbacks
-async function openOsmAnd(){
+// ---- ABRIR OSMAND (botón 1) ----
+qs('#btn-open-osmand')?.addEventListener('click', () => {
+  const lat = cfg.latDefault ?? 43.36;
+  const lon = cfg.lonDefault ?? -5.84;
+  const zoom = 16;
 
-  const coords = await getCurrentPositionOnce(5000);
-  const lat = coords?.latitude ?? 43.36;
-  const lon = coords?.longitude ?? -5.84;
+  // 1) Intent directo a OsmAnd (package de la versión normal)
+  const intentOsmand = `intent://show_map?lat=${lat}&lon=${lon}&z=${zoom}` +
+                       `#Intent;scheme=osmand;package=net.osmand;end`;
 
-  // Intent explícito para OsmAnd NORMAL (forzar paquete net.osmand)
-  const intentUri =
-    `intent://show_map?lat=${lat}&lon=${lon}&z=16` +
-    `#Intent;scheme=osmand;action=android.intent.action.VIEW;` +
-    `package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`;
+  // 2) Deep link clásico de OsmAnd
+  const osmandUrl = `osmand://show_map?lat=${lat}&lon=${lon}&z=${zoom}`;
 
-  // Forzamos el intent directo y, si no está instalada la app, fallback a geo:
-  try {
-    window.location.replace(intentUri);
-    setTimeout(() => {
-      const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
-      window.location.href = geoUri;
-    }, 900);
-  } catch (_e) {
-    const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
-    window.location.href = geoUri;
-  }
-}
+  // 3) Fallback genérico al esquema geo:
+  const geoUrl = `geo:${lat},${lon}?z=${zoom}`;
+
+  // Intent primero (si está OsmAnd normal, abre directo la app)
+  window.location.href = intentOsmand;
+
+  // Fallbacks por si el navegador ignora el intent
+  setTimeout(() => { window.location.href = osmandUrl; }, 500);
+  setTimeout(() => { window.location.href = geoUrl; }, 1000);
+});
+
 
 // 2) Registrar coordenadas
 qs('#btn-getloc').addEventListener('click', async ()=>{
