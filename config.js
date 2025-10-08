@@ -1,5 +1,6 @@
 // === Configuración SEPA (edita estos valores) ===
 window.SEPA_CONFIG = {
+  osmandPackage: "net.osmand", // o "net.osmand.plus" si usan OsmAnd+
   parque: "Avilés",                 // Nombre del parque (aparece por defecto en formularios)
   dispositivoId: "Aviles-01",       // Identificador del móvil
   latDefault: 43.556,               // Para abrir mapa centrado
@@ -15,3 +16,4 @@ window.SEPA_CONFIG = {
     { titulo: "Checklist Helibalde", url: "Procedimientos/Checklist_Helibalde.jpg" }
   ]
 };
+
