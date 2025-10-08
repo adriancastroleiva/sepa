@@ -24,10 +24,10 @@
   </header>
 
   <main>
-    <!-- PRIMER BOTÓN: abrir directamente OsmAnd -->
+    <!-- PRIMER BOTÓN: abrir directamente OsmAnd usando INTENT (1 solo disparo) -->
     <div class="card">
       <p class="muted">Navegación</p>
-      <button id="btn-open-osmand" class="btn btn-primary">Abrir en OsmAnd (mapa)</button>
+      <a id="btn-open-osmand" class="btn btn-primary" href="#">Abrir en OsmAnd (mapa)</a>
       <p class="muted">Abre OsmAnd directamente con la ubicación configurada. Solo en Android.</p>
     </div>
 
@@ -74,58 +74,49 @@
   const getLon = () => (typeof cfg !== 'undefined' && cfg.lonDefault != null ? cfg.lonDefault : -5.84);
   const getZoom = () => 16;
 
-  // ===== Construcción de intents =====
-  function buildIntentOsmandPlus(lat, lon, z) {
-    return `intent://show_map?lat=${lat}&lon=${lon}&z=${z}` +
-           `#Intent;scheme=osmand;package=net.osmand.plus;` +
-           `component=net.osmand.plus/net.osmand.plus.activities.MapActivity;end`;
-  }
-  function buildIntentOsmandFree(lat, lon, z) {
-    return `intent://show_map?lat=${lat}&lon=${lon}&z=${z}` +
-           `#Intent;scheme=osmand;package=net.osmand;` +
-           `component=net.osmand/net.osmand.plus.activities.MapActivity;end`;
-  }
-  function buildIntentGeoPlus(lat, lon, z) {
-    return `intent://${lat},${lon}?z=${z}` +
-           `#Intent;scheme=geo;package=net.osmand.plus;` +
-           `component=net.osmand.plus/net.osmand.plus.activities.MapActivity;end`;
+  // ===== Construcción de intent único (Chrome Android)
+function buildIntentUrl(lat, lon, z) {
+  // Usamos el esquema estándar GEO, que OsmAnd maneja de forma nativa.
+  // No ponemos browser_fallback_url para evitar que Chrome fuerce Play Store si la app sí está instalada.
+  // Formato GEO recomendado: geo:lat,lon?q=lat,lon(label)&z=16
+  const label = encodeURIComponent('SEPA destino');
+  // Intent única a paquete OsmAnd+ (cambia a net.osmand si quieres la gratuita)
+  return `intent://${lat},${lon}?q=${lat},${lon}(${label})&z=${z}` +
+         `#Intent;scheme=geo;package=net.osmand.plus;end`;
+}
   }
 
-  // ===== Apertura encadenada =====
-  function openOsmAnd(lat, lon, z) {
-    const intentPlus = buildIntentOsmandPlus(lat, lon, z);
-    const intentFree = buildIntentOsmandFree(lat, lon, z);
-    const intentGeoP = buildIntentGeoPlus(lat, lon, z);
-    const marketPlus = 'market://details?id=net.osmand.plus';
-
-    try {
-      // Lanzamos primero OsmAnd+ directamente
-      location.href = intentPlus;
-      // Si no abre, probamos gratuitos y geo forzado, luego Play Store
-      setTimeout(() => { location.href = intentFree; }, 700);
-      setTimeout(() => { location.href = intentGeoP; }, 1400);
-      setTimeout(() => { location.href = marketPlus; }, 2100);
-    } catch (e) {
-      location.href = intentGeoP;
-    }
+  // ===== Enlaces del menú
+qs('#btn-open-osmand')?.addEventListener('click', (ev) => {
+  ev.preventDefault();
+  const lat = getLat();
+  const lon = getLon();
+  const z = getZoom();
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  if (!isAndroid) {
+    alert('Esta función abre OsmAnd y solo está disponible en Android.');
+    return;
   }
+  // Reemplazamos el href del propio botón con el intent y disparamos una navegación única
+  const a = ev.currentTarget;
+  a.setAttribute('href', buildIntentUrl(lat, lon, z));
+  a.setAttribute('target', '_self'); // asegura la misma pestaña
+  // Disparo mediante click nativo garantiza el gesto de usuario
+  a.click();
+});
 
-  // ===== Enlaces del menú =====
-  qs('#btn-open-osmand')?.addEventListener('click', () => {
-    const lat = getLat();
-    const lon = getLon();
-    const z = getZoom();
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    if (!isAndroid) {
-      alert('Esta función abre OsmAnd y solo está disponible en Android.');
-      return;
-    }
-    openOsmAnd(lat, lon, z);
-  });
+// ===== Botones de configuración rápida (demo)
+qs('#btn-set-cfg-oviedo')?.addEventListener('click', () => {
+  cfg.latDefault = 43.36029; cfg.lonDefault = -5.84476; saveCfg(); renderCfg();
+});
+qs('#btn-set-cfg-sepa')?.addEventListener('click', () => {
+  cfg.latDefault = 43.3739; cfg.lonDefault = -5.818; saveCfg(); renderCfg();
+});
+qs('#btn-reset-cfg')?.addEventListener('click', () => {
+  delete cfg.latDefault; delete cfg.lonDefault; localStorage.removeItem('sepa_cfg'); renderCfg();
+});
 
-  // ===== Botones de configuración rápida (demo) =====
-  qs('#btn-set-cfg-oviedo')?.addEventListener('click', () => {
-    cfg.latDefault = 43.36029; cfg.lonDefault = -5.84476; saveCfg(); renderCfg();
+renderCfg();
   });
   qs('#btn-set-cfg-sepa')?.addEventListener('click', () => {
     cfg.latDefault = 43.3739; cfg.lonDefault = -5.818; saveCfg(); renderCfg();
