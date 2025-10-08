@@ -71,29 +71,14 @@ async function getCurrentPositionOnce(timeoutMs=8000){
   });
 }
 
-// ---- ABRIR OSMAND (botón 1) ----
+
+// ---- ABRIR APP OSMAND ----
 qs('#btn-open-osmand')?.addEventListener('click', () => {
-  const lat = cfg.latDefault ?? 43.36;
-  const lon = cfg.lonDefault ?? -5.84;
-  const zoom = 16;
-
-  // 1) Intent directo a OsmAnd (package de la versión normal)
-  const intentOsmand = `intent://show_map?lat=${lat}&lon=${lon}&z=${zoom}` +
-                       `#Intent;scheme=osmand;package=net.osmand;end`;
-
-  // 2) Deep link clásico de OsmAnd
-  const osmandUrl = `osmand://show_map?lat=${lat}&lon=${lon}&z=${zoom}`;
-
-  // 3) Fallback genérico al esquema geo:
-  const geoUrl = `geo:${lat},${lon}?z=${zoom}`;
-
-  // Intent primero (si está OsmAnd normal, abre directo la app)
-  window.location.href = intentOsmand;
-
-  // Fallbacks por si el navegador ignora el intent
-  setTimeout(() => { window.location.href = osmandUrl; }, 500);
-  setTimeout(() => { window.location.href = geoUrl; }, 1000);
+  // Intent directo a OsmAnd (versión normal)
+  const intent = 'intent://#Intent;package=net.osmand;scheme=osmand;end';
+  window.location.href = intent;
 });
+
 
 
 // 2) Registrar coordenadas
