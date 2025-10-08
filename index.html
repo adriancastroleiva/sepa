@@ -17,45 +17,33 @@
 
   <main id="view-home" class="view active">
     <section class="menu-grid">
-      <!-- 1. Recursos Hídricos (OsmAnd) -->
       <button class="card" id="menu-osmand">
-        <div class="card-ico"><img src="./assets/icons/hydrant.svg" alt="Hidrante" class="ico-s"></div>
-        <div class="card-title">1. Recursos Hídricos</div>
-        <div class="card-desc">Hidrantes y puntos de agua</div>
+        <div class="card-ico">🗺️</div>
+        <div class="card-title">1. Mapa de recursos</div>
+        <div class="card-desc">Abrir OsmAnd</div>
       </button>
 
-      <!-- 2. Puntos Kilométricos (Google Maps MyMaps) -->
-      <button class="card" id="menu-pk">
-        <div class="card-ico"><span class="badge">PK</span></div>
-        <div class="card-title">2. Puntos Kilométricos</div>
-        <div class="card-desc">Mapa My Maps (view)</div>
-      </button>
-
-      <!-- 3. Registrar Coordenadas -->
       <button class="card" id="menu-coords">
         <div class="card-ico">📍</div>
-        <div class="card-title">3. Registrar Coordenadas</div>
+        <div class="card-title">2. Registrar Coordenadas</div>
         <div class="card-desc">Capturar & guardar</div>
       </button>
 
-      <!-- 4. Procedimientos -->
       <button class="card" id="menu-procs">
         <div class="card-ico">📚</div>
-        <div class="card-title">4. Procedimientos</div>
+        <div class="card-title">3. Procedimientos</div>
         <div class="card-desc">Repositorio local</div>
       </button>
 
-      <!-- 5. Toma de datos -->
       <button class="card" id="menu-form">
         <div class="card-ico">📝</div>
-        <div class="card-title">5. Toma de datos</div>
+        <div class="card-title">4. Toma de datos</div>
         <div class="card-desc">Formulario + fotos</div>
       </button>
 
-      <!-- 6. Ver datos guardados -->
       <button class="card" id="menu-view">
         <div class="card-ico">📂</div>
-        <div class="card-title">6. Ver datos guardados</div>
+        <div class="card-title">5. Ver datos guardados</div>
         <div class="card-desc">Registros locales</div>
       </button>
     </section>
@@ -145,7 +133,7 @@
     </div>
   </section>
 
-  <!-- Ver datos guardados -->
+  <!-- Ver datos guardados (solo opción 4) -->
   <section id="view-saved" class="view">
     <header class="subheader">
       <button class="btn ghost" data-back>← Volver</button>
@@ -165,7 +153,7 @@
 
   <dialog id="dlg-about">
     <h3>SEPA WebApp</h3>
-    <p>v1.4 · PWA instalable · Datos locales (IndexedDB). Funciona sin conexión (salvo enlaces a otras apps/servicios).</p>
+    <p>v1.0 · PWA instalable · Datos locales (IndexedDB). Funciona sin conexión (salvo OsmAnd y futuro Google Sheets).</p>
     <button class="btn" id="btn-close-about">Cerrar</button>
   </dialog>
 

@@ -71,15 +71,31 @@ async function getCurrentPositionOnce(timeoutMs=8000){
   });
 }
 
+// 1) Open OsmAnd with intent + fallbacks
+async function openOsmAnd(){
 
-// ---- ABRIR APP OSMAND ----
-qs('#btn-open-osmand')?.addEventListener('click', () => {
-  // Intent directo a OsmAnd (versión normal)
-  const intent = 'intent://#Intent;package=net.osmand;scheme=osmand;end';
-  window.location.href = intent;
-});
+  const coords = await getCurrentPositionOnce(5000);
+  const lat = coords?.latitude ?? 43.36;
+  const lon = coords?.longitude ?? -5.84;
 
+  // Intent explícito para OsmAnd NORMAL (forzar paquete net.osmand)
+  const intentUri =
+    `intent://show_map?lat=${lat}&lon=${lon}&z=16` +
+    `#Intent;scheme=osmand;action=android.intent.action.VIEW;` +
+    `package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`;
 
+  // Forzamos el intent directo y, si no está instalada la app, fallback a geo:
+  try {
+    window.location.replace(intentUri);
+    setTimeout(() => {
+      const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
+      window.location.href = geoUri;
+    }, 900);
+  } catch (_e) {
+    const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
+    window.location.href = geoUri;
+  }
+}
 
 // 2) Registrar coordenadas
 qs('#btn-getloc').addEventListener('click', async ()=>{
