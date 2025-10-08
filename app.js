@@ -71,32 +71,18 @@ async function getCurrentPositionOnce(timeoutMs=8000){
   });
 }
 
-// 1) Recursos Hídricos (abrir OsmAnd normal con múltiples estrategias)
+// 1) Recursos Hídricos (OsmAnd): intent sin component + fallback geo (evitar Play Store)
 async function openOsmAnd(){
-  const coords = await getCurrentPositionOnce(6000);
+  const coords = await getCurrentPositionOnce(5000);
   const lat = coords?.latitude ?? 43.36;
   const lon = coords?.longitude ?? -5.84;
-  const label = encodeURIComponent('SEPA');
-
-  const tries = [
-    // Intent con esquema osmand y paquete net.osmand
-    `intent://show_map?lat=${lat}&lon=${lon}&z=16#Intent;scheme=osmand;action=android.intent.action.VIEW;package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`,
-    // Intent con geo y paquete net.osmand
-    `intent://${lat},${lon}?q=${lat},${lon}(${label})#Intent;scheme=geo;action=android.intent.action.VIEW;package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`,
-    // Intent con S.uri
-    `intent://#Intent;scheme=geo;action=android.intent.action.VIEW;package=net.osmand;S.uri=geo:${lat},${lon}?q=${lat},${lon}(${label});end`,
-  ];
-
-  const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(${label})`;
-  let delay = 0;
-  for (const u of tries){
-    setTimeout(()=>{ try{ window.location.href = u; }catch{} }, delay);
-    delay += 500;
-  }
-  setTimeout(()=>{ window.location.href = geoUri; }, delay + 300);
+  const intent = `intent://show_map?lat=${lat}&lon=${lon}&z=16#Intent;scheme=osmand;action=android.intent.action.VIEW;package=net.osmand;end`;
+  const geo = `geo:${lat},${lon}?q=${lat},${lon}(Recursos%20H%C3%ADdricos)`;
+  try { window.location.replace(intent); } catch(_e){}
+  setTimeout(()=>{ window.location.href = geo; }, 900);
 }
 
-// 2) Puntos Kilométricos — abrir My Maps en view y centrado en ubicación actual
+// 2) Puntos Kilométricos — abrir /view en https (sin package) + fallback geo
 const GMAPS_PK_LINK = "https://www.google.com/maps/d/u/0/viewer?hl=es&mid=1QgMMRz19UxEE1yY9T1Sptjj-2aQvHRs&ll=43.137755721077234%2C-5.832713974846781&z=8";
 async function openGMapsPK(){
   const coords = await getCurrentPositionOnce(7000);
@@ -107,26 +93,17 @@ async function openGMapsPK(){
   if (!url){ alert('Falta el enlace de My Maps para PK'); return; }
   try {
     const u = new URL(url);
-    // path -> /maps/d/view
     u.pathname = u.pathname.replace(/\/d\/u\/\d+\/viewer/,'/d/view').replace('/d/viewer','/d/view').replace('/d/edit','/d/view');
-    // centrar en posición actual + zoom
     u.searchParams.set('ll', `${lat},${lon}`);
     u.searchParams.set('z', '15');
     u.searchParams.set('hl', 'es');
     url = u.toString();
   } catch(_e){ /* ignore */ }
 
-  const intent = `intent://${url.replace(/^https?:\/\//,'')}` +
-                 `#Intent;scheme=https;package=com.google.android.apps.maps;end`;
-  const geo = `geo:${lat},${lon}?q=${lat},${lon}(PK)`;
-
-  try {
-    window.location.href = intent;
-    setTimeout(()=>{ window.location.href = url; }, 800);
-    setTimeout(()=>{ window.location.href = geo; }, 1600);
-  } catch(_e){
-    window.location.href = url;
-  }
+  // Preferimos https directo (Android suele abrir la app si está instalada y asociada)
+  window.location.href = url;
+  // Fallback a geo
+  setTimeout(()=>{ window.location.href = `geo:${lat},${lon}?q=${lat},${lon}(PK)`; }, 1500);
 }
 
 // ===== Registrar coordenadas
@@ -335,7 +312,7 @@ function escapeHtml(str){
 // ===== IndexedDB tiny wrapper =====
 const db = (function(){
   const DB_NAME = 'sepa-webapp';
-  const DB_VER = 2;
+  const DB_VER = 3;
   let p;
   function open(){
     if (p) return p;
