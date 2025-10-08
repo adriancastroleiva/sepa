@@ -71,39 +71,41 @@ async function getCurrentPositionOnce(timeoutMs=8000){
   });
 }
 
-// 1) Recursos Hídricos (OsmAnd): intent sin component + fallback geo (evitar Play Store)
+// 1) Recursos Hídricos (OsmAnd): usar osmand:// primero; fallback geo (evita Play Store)
 async function openOsmAnd(){
   const coords = await getCurrentPositionOnce(5000);
   const lat = coords?.latitude ?? 43.36;
   const lon = coords?.longitude ?? -5.84;
-  const intent = `intent://show_map?lat=${lat}&lon=${lon}&z=16#Intent;scheme=osmand;action=android.intent.action.VIEW;package=net.osmand;end`;
+  const osmand = `osmand://show_map?lat=${lat}&lon=${lon}&z=16`;
   const geo = `geo:${lat},${lon}?q=${lat},${lon}(Recursos%20H%C3%ADdricos)`;
-  try { window.location.replace(intent); } catch(_e){}
-  setTimeout(()=>{ window.location.href = geo; }, 900);
+  window.location.href = osmand;
+  setTimeout(()=>{ window.location.href = geo; }, 800);
 }
 
-// 2) Puntos Kilométricos — abrir /view en https (sin package) + fallback geo
+// 2) Puntos Kilométricos — usar maps.app.goo.gl con /view; fallback https y geo
 const GMAPS_PK_LINK = "https://www.google.com/maps/d/u/0/viewer?hl=es&mid=1QgMMRz19UxEE1yY9T1Sptjj-2aQvHRs&ll=43.137755721077234%2C-5.832713974846781&z=8";
 async function openGMapsPK(){
   const coords = await getCurrentPositionOnce(7000);
   const lat = coords?.latitude ?? 43.36;
   const lon = coords?.longitude ?? -5.84;
 
-  let url = (GMAPS_PK_LINK || '').trim();
-  if (!url){ alert('Falta el enlace de My Maps para PK'); return; }
+  let base = (GMAPS_PK_LINK || '').trim();
+  if (!base){ alert('Falta el enlace de My Maps para PK'); return; }
   try {
-    const u = new URL(url);
+    const u = new URL(base);
     u.pathname = u.pathname.replace(/\/d\/u\/\d+\/viewer/,'/d/view').replace('/d/viewer','/d/view').replace('/d/edit','/d/view');
     u.searchParams.set('ll', `${lat},${lon}`);
     u.searchParams.set('z', '15');
     u.searchParams.set('hl', 'es');
-    url = u.toString();
+    base = u.toString();
   } catch(_e){ /* ignore */ }
 
-  // Preferimos https directo (Android suele abrir la app si está instalada y asociada)
-  window.location.href = url;
-  // Fallback a geo
-  setTimeout(()=>{ window.location.href = `geo:${lat},${lon}?q=${lat},${lon}(PK)`; }, 1500);
+  // Deep link recomendado por Google: maps.app.goo.gl con 'link='
+  const deep = `https://maps.app.goo.gl/?link=${encodeURIComponent(base)}`;
+
+  window.location.href = deep;
+  setTimeout(()=>{ window.location.href = base; }, 900);
+  setTimeout(()=>{ window.location.href = `geo:${lat},${lon}?q=${lat},${lon}(PK)`; }, 1800);
 }
 
 // ===== Registrar coordenadas
@@ -312,7 +314,7 @@ function escapeHtml(str){
 // ===== IndexedDB tiny wrapper =====
 const db = (function(){
   const DB_NAME = 'sepa-webapp';
-  const DB_VER = 3;
+  const DB_VER = 4;
   let p;
   function open(){
     if (p) return p;

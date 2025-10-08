@@ -1,5 +1,5 @@
-// Service worker (cache bump v1.3 to force update)
-const CACHE_NAME = 'sepa-webapp-v1-3';
+// Service worker v1.4 (force refresh)
+const CACHE_NAME = 'sepa-webapp-v1-4';
 const ASSETS = [
   './',
   './index.html',
