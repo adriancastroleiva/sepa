@@ -2,130 +2,161 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SEPA Webapp — Menú principal</title>
-  <style>
-    :root { --bg:#0b1220; --card:#121a2b; --text:#e7eefc; --accent:#3aa0ff; }
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); }
-    header { padding: 20px; background: #0d1527; border-bottom: 1px solid #1e2b4a; }
-    h1 { margin:0; font-size: 20px; }
-    main { padding: 20px; display: grid; gap: 16px; max-width: 680px; margin: 0 auto; }
-    .card { background: var(--card); border:1px solid #1c2742; border-radius: 14px; padding: 16px; }
-    .btn { display: inline-block; padding: 14px 16px; border-radius: 12px; border:1px solid #29436b; background: #17233a; color: var(--text); text-decoration: none; cursor: pointer; font-weight: 600; }
-    .btn-primary { background: var(--accent); color:#041225; border-color:#2a7ed1; }
-    .muted { opacity:.8; font-size: 13px; }
-    .stack { display:flex; gap:10px; flex-wrap:wrap; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>SEPA WebApp</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0f766e" />
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="icon" href="./assets/icons/icon-192.png" />
 </head>
 <body>
-  <header>
-    <h1>SEPA Webapp — Menú principal</h1>
+  <header class="app-header">
+    <h1>SEPA</h1>
+    <button id="btn-install" class="btn small" hidden>Instalar</button>
   </header>
 
-  <main>
-    <!-- PRIMER BOTÓN: abrir directamente OsmAnd usando INTENT (1 solo disparo) -->
-    <div class="card">
-      <p class="muted">Navegación</p>
-      <a id="btn-open-osmand" class="btn btn-primary" href="#">Abrir en OsmAnd (mapa)</a>
-      <p class="muted">Abre OsmAnd directamente con la ubicación configurada. Solo en Android.</p>
-    </div>
+  <main id="view-home" class="view active">
+    <section class="menu-grid">
+      <button class="card" id="menu-osmand">
+        <div class="card-ico">🗺️</div>
+        <div class="card-title">1. Mapa de recursos</div>
+        <div class="card-desc">Abrir OsmAnd</div>
+      </button>
 
-    <!-- Otros botones de ejemplo del menú (colócalos debajo) -->
-    <div class="card stack">
-      <a class="btn" href="#">Parte diario</a>
-      <a class="btn" href="#">Incidencias</a>
-      <a class="btn" href="#">Medios</a>
-    </div>
+      <button class="card" id="menu-coords">
+        <div class="card-ico">📍</div>
+        <div class="card-title">2. Registrar Coordenadas</div>
+        <div class="card-desc">Capturar & guardar</div>
+      </button>
 
-    <div class="card">
-      <p class="muted"><strong>Configuración rápida</strong></p>
-      <div class="stack">
-        <button id="btn-set-cfg-oviedo" class="btn">Usar Oviedo</button>
-        <button id="btn-set-cfg-sepa" class="btn">Usar SEPA Central</button>
-        <button id="btn-reset-cfg" class="btn">Valores por defecto</button>
-      </div>
-      <p id="cfg-info" class="muted" style="margin-top:8px"></p>
-    </div>
+      <button class="card" id="menu-procs">
+        <div class="card-ico">📚</div>
+        <div class="card-title">3. Procedimientos</div>
+        <div class="card-desc">Repositorio local</div>
+      </button>
+
+      <button class="card" id="menu-form">
+        <div class="card-ico">📝</div>
+        <div class="card-title">4. Toma de datos</div>
+        <div class="card-desc">Formulario + fotos</div>
+      </button>
+
+      <button class="card" id="menu-view">
+        <div class="card-ico">📂</div>
+        <div class="card-title">5. Ver datos guardados</div>
+        <div class="card-desc">Registros locales</div>
+      </button>
+    </section>
   </main>
 
-  <script>
-  // ===== Configuración =====
-  // Puedes inicializar cfg desde tu app; aquí dejamos un fallback editable.
-  window.cfg = window.cfg || {
-    latDefault: 43.36029,   // Oviedo
-    lonDefault: -5.84476,   // Oviedo
-  };
+  <!-- Registrar Coordenadas -->
+  <section id="view-coords" class="view">
+    <header class="subheader">
+      <button class="btn ghost" data-back>← Volver</button>
+      <h2>Registrar Coordenadas</h2>
+    </header>
 
-  // Persistimos en localStorage para tus pruebas (opcional)
-  const saveCfg = () => localStorage.setItem('sepa_cfg', JSON.stringify({ latDefault: cfg.latDefault, lonDefault: cfg.lonDefault }));
-  const loadCfg = () => { try { const s = localStorage.getItem('sepa_cfg'); if (s) Object.assign(cfg, JSON.parse(s)); } catch(_){} };
-  const renderCfg = () => {
-    const el = document.getElementById('cfg-info');
-    if (!el) return;
-    el.textContent = `Lat: ${getLat()}  Lon: ${getLon()}  (zoom ${getZoom()})`;
-  };
+    <div class="card pad">
+      <div class="row">
+        <label>Nombre de la incidencia</label>
+        <input id="inc-name" type="text" placeholder="Ej. Incendio Forestal en Genestoso">
+      </div>
 
-  loadCfg();
+      <div class="row">
+        <button id="btn-getloc" class="btn">Obtener ubicación actual</button>
+      </div>
 
-  // ===== Utilidades =====
-  const qs = s => document.querySelector(s);
-  const getLat = () => (typeof cfg !== 'undefined' && cfg.latDefault != null ? cfg.latDefault : 43.36);
-  const getLon = () => (typeof cfg !== 'undefined' && cfg.lonDefault != null ? cfg.lonDefault : -5.84);
-  const getZoom = () => 16;
+      <div class="grid-2">
+        <div>
+          <label>Latitud (decimal)</label>
+          <input id="lat-dec" type="text" inputmode="decimal" readonly>
+        </div>
+        <div>
+          <label>Longitud (decimal)</label>
+          <input id="lon-dec" type="text" inputmode="decimal" readonly>
+        </div>
+      </div>
 
-  // ===== Construcción de intent único (Chrome Android)
-function buildIntentUrl(lat, lon, z) {
-  // Usamos el esquema estándar GEO, que OsmAnd maneja de forma nativa.
-  // No ponemos browser_fallback_url para evitar que Chrome fuerce Play Store si la app sí está instalada.
-  // Formato GEO recomendado: geo:lat,lon?q=lat,lon(label)&z=16
-  const label = encodeURIComponent('SEPA destino');
-  // Intent única a paquete OsmAnd+ (cambia a net.osmand si quieres la gratuita)
-  return `intent://${lat},${lon}?q=${lat},${lon}(${label})&z=${z}` +
-         `#Intent;scheme=geo;package=net.osmand.plus;end`;
-}
-  }
+      <div class="grid-2">
+        <div>
+          <label>Latitud (sexagesimal)</label>
+          <input id="lat-dms" type="text" readonly>
+        </div>
+        <div>
+          <label>Longitud (sexagesimal)</label>
+          <input id="lon-dms" type="text" readonly>
+        </div>
+      </div>
 
-  // ===== Enlaces del menú
-qs('#btn-open-osmand')?.addEventListener('click', (ev) => {
-  ev.preventDefault();
-  const lat = getLat();
-  const lon = getLon();
-  const z = getZoom();
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  if (!isAndroid) {
-    alert('Esta función abre OsmAnd y solo está disponible en Android.');
-    return;
-  }
-  // Reemplazamos el href del propio botón con el intent y disparamos una navegación única
-  const a = ev.currentTarget;
-  a.setAttribute('href', buildIntentUrl(lat, lon, z));
-  a.setAttribute('target', '_self'); // asegura la misma pestaña
-  // Disparo mediante click nativo garantiza el gesto de usuario
-  a.click();
-});
+      <div class="row end">
+        <button id="btn-save-coords" class="btn success">Guardar</button>
+      </div>
 
-// ===== Botones de configuración rápida (demo)
-qs('#btn-set-cfg-oviedo')?.addEventListener('click', () => {
-  cfg.latDefault = 43.36029; cfg.lonDefault = -5.84476; saveCfg(); renderCfg();
-});
-qs('#btn-set-cfg-sepa')?.addEventListener('click', () => {
-  cfg.latDefault = 43.3739; cfg.lonDefault = -5.818; saveCfg(); renderCfg();
-});
-qs('#btn-reset-cfg')?.addEventListener('click', () => {
-  delete cfg.latDefault; delete cfg.lonDefault; localStorage.removeItem('sepa_cfg'); renderCfg();
-});
+      <p class="muted small">* Próximamente también se enviará a Google Sheets (URL pendiente).</p>
+    </div>
+  </section>
 
-renderCfg();
-  });
-  qs('#btn-set-cfg-sepa')?.addEventListener('click', () => {
-    cfg.latDefault = 43.3739; cfg.lonDefault = -5.818; saveCfg(); renderCfg();
-  });
-  qs('#btn-reset-cfg')?.addEventListener('click', () => {
-    delete cfg.latDefault; delete cfg.lonDefault; localStorage.removeItem('sepa_cfg'); renderCfg();
-  });
+  <!-- Procedimientos -->
+  <section id="view-procs" class="view">
+    <header class="subheader">
+      <button class="btn ghost" data-back>← Volver</button>
+      <h2>Procedimientos</h2>
+    </header>
 
-  renderCfg();
-  </script>
+    <div id="proc-list" class="card pad">
+      <p class="muted">Coloca archivos en <code>/procedimientos/</code> y añade sus nombres en <code>procedimientos/index.json</code> para listarlos aquí.</p>
+      <ul id="proc-ul"></ul>
+    </div>
+  </section>
+
+  <!-- Toma de datos -->
+  <section id="view-form" class="view">
+    <header class="subheader">
+      <button class="btn ghost" data-back>← Volver</button>
+      <h2>Toma de datos</h2>
+    </header>
+
+    <div class="card pad">
+      <div id="entries"></div>
+      <button id="btn-add-entry" class="btn">Añadir entrada</button>
+
+      <div class="row">
+        <label>Fotografías (puedes hacer varias)</label>
+        <input id="photo-input" type="file" accept="image/*" capture="environment" multiple>
+        <div id="photo-preview" class="thumbs"></div>
+      </div>
+
+      <div class="row end gap">
+        <button id="btn-clear-form" class="btn ghost">Limpiar</button>
+        <button id="btn-save-form" class="btn success">Finalizar y guardar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ver datos guardados (solo opción 4) -->
+  <section id="view-saved" class="view">
+    <header class="subheader">
+      <button class="btn ghost" data-back>← Volver</button>
+      <h2>Registros guardados</h2>
+    </header>
+
+    <div id="saved-list" class="list"></div>
+    <div class="row end gap pad">
+      <button id="btn-export-json" class="btn">Exportar JSON</button>
+      <button id="btn-clear-all" class="btn danger">Borrar todo</button>
+    </div>
+  </section>
+
+  <footer class="app-footer">
+    <button class="link" id="btn-about">Acerca de</button>
+  </footer>
+
+  <dialog id="dlg-about">
+    <h3>SEPA WebApp</h3>
+    <p>v1.0 · PWA instalable · Datos locales (IndexedDB). Funciona sin conexión (salvo OsmAnd y futuro Google Sheets).</p>
+    <button class="btn" id="btn-close-about">Cerrar</button>
+  </dialog>
+
+  <script src="./app.js" type="module"></script>
 </body>
 </html>
