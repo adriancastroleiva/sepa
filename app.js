@@ -73,26 +73,24 @@ async function getCurrentPositionOnce(timeoutMs=8000){
 
 // 1) Open OsmAnd with intent + fallbacks
 async function openOsmAnd(){
-
   const coords = await getCurrentPositionOnce(5000);
   const lat = coords?.latitude ?? 43.36;
   const lon = coords?.longitude ?? -5.84;
 
-  // Intent explícito para OsmAnd NORMAL (forzar paquete net.osmand)
-  const intentUri =
-    `intent://show_map?lat=${lat}&lon=${lon}&z=16` +
-    `#Intent;scheme=osmand;action=android.intent.action.VIEW;` +
-    `package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`;
+  // Usamos INTENT con scheme geo:, package=net.osmand para abrir el mapa directamente en OsmAnd normal
+  const label = encodeURIComponent('Ubicación');
+  const intentGeo = `intent://${lat},${lon}?q=${lat},${lon}(${label})#Intent;scheme=geo;action=android.intent.action.VIEW;package=net.osmand;component=net.osmand/net.osmand.activities.MapActivity;end`;
 
-  // Forzamos el intent directo y, si no está instalada la app, fallback a geo:
   try {
-    window.location.replace(intentUri);
+    // Abrir directamente la app
+    window.location.replace(intentGeo);
+    // Fallback por si el navegador no soporta intent URIs
     setTimeout(() => {
-      const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
+      const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(${label})`;
       window.location.href = geoUri;
-    }, 900);
+    }, 800);
   } catch (_e) {
-    const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
+    const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(${label})`;
     window.location.href = geoUri;
   }
 }
