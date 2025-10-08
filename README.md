@@ -1,9 +1,15 @@
-# SEPA Bomberos — PWA (forzada a OsmAnd Plus, sin abrir Play Store)
+# SEPA WebApp (PWA) — v3
 
-- Botón de **Mapa de Recursos** es un `<a href="intent://...">` con `scheme=geo` y `package=net.osmand.plus`.
-- Así Android lanza **OsmAnd+ directo** (sin chooser y sin Play Store).
-- Fallback `geo:` si el Intent no salta en ~700 ms.
+- Eliminada la antigua opción 3 (My Maps edición).
+- Reordenadas 5 y 6: ahora **5) Toma de datos** y **6) Ver datos guardados**.
 
-Despliegue: subir a GitHub Pages/Netlify. Editar `config.js` si cambian parque/lat/lon o si algún móvil usa `net.osmand`.
+## Menú final
+1. **Hidrantes y Puntos de agua** → OsmAnd (Plus → OsmAnd → geo)
+2. **Puntos Kilométricos** → URL My Maps (vista)
+3. **Registrar Coordenadas** → Decimal y sexagesimal; guarda local
+4. **Procedimientos (PDF)** → Placeholder
+5. **Toma de datos (local)** → Formulario + fotos (IndexedDB)
+6. **Ver datos guardados** → Listado de registros con fotos
 
-Generado: 2025-10-08T16:18:00.024729Z
+## Despliegue
+Sube a GitHub y activa Pages.

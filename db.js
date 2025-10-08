@@ -1,13 +1,12 @@
-// Minimal IndexedDB wrapper for local records (Option 5 & 6) + GPS saves (Option 3 local)
 const DB_NAME = 'sepa_webapp_db';
 const DB_VERSION = 1;
-const STORE_RECORDS = 'records'; // for Option 5
-const STORE_GPS = 'gps';         // for Option 3
+const STORE_RECORDS = 'records';
+const STORE_GPS = 'gps';
 
 function openDB() {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onupgradeneeded = (e) => {
+    req.onupgradeneeded = () => {
       const db = req.result;
       if (!db.objectStoreNames.contains(STORE_RECORDS)) {
         const store = db.createObjectStore(STORE_RECORDS, { keyPath: 'id', autoIncrement: true });

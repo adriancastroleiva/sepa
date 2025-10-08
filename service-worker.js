@@ -1,5 +1,4 @@
-// Basic cache-first PWA service worker
-const CACHE = 'sepa-cache-v1';
+const CACHE = 'sepa-cache-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -19,7 +18,5 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((res) => res || fetch(e.request))
-  );
+  e.respondWith(caches.match(e.request).then((res) => res || fetch(e.request)));
 });

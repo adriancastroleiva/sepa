@@ -1,225 +1,131 @@
-// PWA install prompt
-let deferredPrompt;
-const btnInstall = document.getElementById('btn-install');
-window.addEventListener('beforeinstallprompt', (e)=>{
+function toDMS(val, isLat = true) {
+  const deg = Math.floor(Math.abs(val));
+  const minFloat = (Math.abs(val) - deg) * 60;
+  const min = Math.floor(minFloat);
+  const sec = (minFloat - min) * 60;
+  const hemi = isLat ? (val >= 0 ? 'N' : 'S') : (val >= 0 ? 'E' : 'W');
+  return `${deg}° ${min}' ${sec.toFixed(2)}" ${hemi}`;
+}
+
+// 1) OsmAnd (Plus → Normal → geo:)
+function openOsmAnd(lat = 43.36, lon = -5.84, zoom = 15) {
+  try {
+    const scheme = `osmand://show_map?lat=${lat}&lon=${lon}&z=${zoom}`;
+    window.location.href = scheme;
+    setTimeout(() => {
+      const intentPlus = `intent://show_map?lat=${lat}&lon=${lon}&z=${zoom}#Intent;scheme=osmand;package=net.osmand.plus;end`;
+      window.location.href = intentPlus;
+      setTimeout(() => {
+        const intentStd = `intent://show_map?lat=${lat}&lon=${lon}&z=${zoom}#Intent;scheme=osmand;package=net.osmand;end`;
+        window.location.href = intentStd;
+        setTimeout(() => {
+          const geo = `geo:${lat},${lon}?z=${zoom}`;
+          window.location.href = geo;
+        }, 600);
+      }, 600);
+    }, 600);
+  } catch (e) { console.error(e); }
+}
+
+// 2) My Maps (vista)
+function openMapaGeneral() {
+  const url = 'https://www.google.com/maps/d/view?mid=1QgMMRz19UxEE1yY9T1Sptjj-2aQvHRs&ll=43.13775572107721%2C-5.832713974846781&z=8';
+  window.open(url, '_blank');
+}
+
+// 3) Registrar coordenadas
+async function getCurrentPosition() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error('Geolocalización no soportada'));
+    navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+  });
+}
+
+async function handleGPS() {
+  const out = document.getElementById('gps-output');
+  const name = document.getElementById('gps-name').value.trim();
+  out.textContent = 'Obteniendo posición...';
+  try {
+    const pos = await getCurrentPosition();
+    const { latitude, longitude } = pos.coords;
+    const latDec = latitude.toFixed(6);
+    const lonDec = longitude.toFixed(6);
+    const latDMS = toDMS(latitude, true);
+    const lonDMS = toDMS(longitude, false);
+    out.innerHTML = `<b>Decimal:</b> ${latDec}, ${lonDec}<br><b>Sexagesimal:</b> ${latDMS} — ${lonDMS}`;
+    const payload = { name: name || null, latitude, longitude, lat_decimal: latDec, lon_decimal: lonDec, lat_dms: latDMS, lon_dms: lonDMS, createdAt: new Date().toISOString() };
+    await SepaDB.addGPS(payload);
+    // TODO: Google Sheets endpoint
+  } catch(e) { out.textContent = 'Error: ' + e.message; }
+}
+
+// 5) Toma de datos (local) - save
+function fileListToDataURLs(fileList) {
+  const promises = [];
+  for (const f of fileList) {
+    promises.push(new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({ name: f.name, type: f.type, dataURL: reader.result });
+      reader.readAsDataURL(f);
+    }));
+  }
+  return Promise.all(promises);
+}
+
+async function handleLocalFormSave(e) {
   e.preventDefault();
-  deferredPrompt = e;
-  btnInstall.hidden = false;
-});
-btnInstall?.addEventListener('click', async ()=>{
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  btnInstall.hidden = true;
-});
-
-// Register service worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register('sw.js');
-  });
-}
-
-const cfg = window.SEPA_CONFIG || {};
-const qs = (sel)=>document.querySelector(sel);
-const views = ['menu','coord','proced','parte'];
-
-function show(id){
-  views.forEach(v=>qs('#view-'+v)?.classList.remove('active'));
-  qs('#view-'+id)?.classList.add('active');
-}
-document.querySelectorAll('[data-home]').forEach(b=>b.addEventListener('click',()=>show('menu')));
-document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>show('menu')));
-
-document.querySelectorAll('.card').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    const target = b.getAttribute('data-target');
-    if (target==='coord') show('coord');
-    if (target==='proced') { renderProcedimientos(); show('proced'); }
-    if (target==='parte') { initParteDefaults(); show('parte'); }
-  });
-});
-
-// ---- OsmAnd+ desde menú: href intent:// pre-generado ----
-function setOsmAndHref() {
-  const a = document.getElementById('menu-open-osmand');
-  if (!a) return;
-  const lat = cfg.latDefault ?? 43.36;
-  const lon = cfg.lonDefault ?? -5.85;
-  const pkg = (cfg.osmandPackage || 'net.osmand.plus').trim();
-  const intentGeo = `intent://0,0?q=${lat},${lon}#Intent;scheme=geo;package=${pkg};end;`;
-  a.setAttribute('href', intentGeo);
-  a.setAttribute('data-fallback', `geo:${lat},${lon}?z=16`);
-}
-document.addEventListener('DOMContentLoaded', setOsmAndHref);
-
-document.getElementById('menu-open-osmand')?.addEventListener('click', (e) => {
-  setTimeout(() => {
-    if (document.visibilityState === 'visible') {
-      const geo = e.currentTarget.getAttribute('data-fallback') || '';
-      if (geo) window.location.href = geo;
-    }
-  }, 700);
-});
-
-// Connection + pending queue status
-const statusConn = qs('#status-conn');
-const pendingCount = qs('#pending-count');
-function updateConn(){
-  if (!statusConn) return;
-  statusConn.textContent = navigator.onLine ? '● Online' : '● Offline';
-  statusConn.style.color = navigator.onLine ? '#22c55e' : '#f59e0b';
-}
-window.addEventListener('online', ()=>{ updateConn(); trySync(); });
-window.addEventListener('offline', updateConn);
-updateConn();
-
-const qMarksKey = 'sepa_pending_marks';
-const qPartsKey = 'sepa_pending_parts';
-const getQueue = (k)=>JSON.parse(localStorage.getItem(k)||'[]');
-const setQueue = (k,arr)=>localStorage.setItem(k, JSON.stringify(arr));
-function refreshPending(){
-  if (!pendingCount) return;
-  const total = getQueue(qMarksKey).length + getQueue(qPartsKey).length;
-  pendingCount.textContent = total;
-}
-refreshPending();
-
-// ---- COORDENADAS ----
-const gpsInfo = qs('#gps-info');
-const incInput = qs('#incidente-id');
-const notasInput = qs('#notas');
-
-qs('#btn-capturar')?.addEventListener('click', async ()=>{
-  if (gpsInfo) gpsInfo.textContent = 'Obteniendo GPS...';
-  try{
-    const pos = await getPosition({ enableHighAccuracy: true, timeout: 15000 });
-    const payload = {
-      type: 'marca',
-      Timestamp: new Date().toISOString(),
-      Parque: cfg.parque || '',
-      IncidenteID: incInput?.value || '',
-      Coordenadas: `${pos.coords.latitude},${pos.coords.longitude}`,
-      PrecisionM: pos.coords.accuracy ?? null,
-      DispositivoID: cfg.dispositivoId || '',
-      Notas: (notasInput?.value||'').slice(0,1024)
-    };
-    if (gpsInfo) gpsInfo.textContent = `GPS OK: ${payload.Coordenadas} (±${Math.round(payload.PrecisionM||0)}m)`;
-    await enqueueAndSend(qMarksKey, payload);
-    if (incInput) incInput.value=''; 
-    if (notasInput) notasInput.value='';
-    alert('Coordenadas guardadas');
-  }catch(e){
-    console.error(e);
-    if (gpsInfo) gpsInfo.textContent = 'Error GPS o permisos denegados';
-    alert('No se pudo capturar la ubicación. Revisa permisos de localización.');
-  }
-});
-
-function getPosition(opts){
-  return new Promise((res,rej)=>navigator.geolocation.getCurrentPosition(res, rej, opts));
-}
-
-async function enqueueAndSend(key, payload){
-  const q = getQueue(key); q.push(payload); setQueue(key, q); refreshPending();
-  await trySync();
-}
-
-qs('#btn-sync')?.addEventListener('click', trySync);
-
-async function trySync(){
-  const url = (cfg.endpointURL||'').trim();
-  if (!url){ refreshPending(); return; }
-  if (!navigator.onLine){ refreshPending(); return; }
-  let marks = getQueue(qMarksKey);
-  if (marks.length){
-    try{
-      const resp = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kind:'marks', rows: marks })
-      });
-      if (resp.ok){
-        marks = []; setQueue(qMarksKey, marks);
-      }
-    }catch(e){ console.error('sync marks', e); }
-  }
-  let parts = getQueue(qPartsKey);
-  if (parts.length){
-    try{
-      const resp = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kind:'parts', rows: parts })
-      });
-      if (resp.ok){
-        parts = []; setQueue(qPartsKey, parts);
-      }
-    }catch(e){ console.error('sync parts', e); }
-  }
-  refreshPending();
-}
-
-// ---- PROCEDIMIENTOS ----
-function renderProcedimientos(){
-  const cont = qs('#procedimientos-list');
-  if (!cont) return;
-  cont.innerHTML = '';
-  (cfg.procedimientos||[]).forEach(p=>{
-    const a = document.createElement('a');
-    a.href = p.url; a.target = '_blank'; a.rel = 'noopener';
-    a.textContent = p.titulo;
-    cont.appendChild(a);
-  });
-}
-
-// ---- PARTE ----
-function initParteDefaults(){
-  const el = document.getElementById('parte-parque');
-  if (el) el.value = cfg.parque || '';
-}
-
-const parteForm = qs('#parte-form');
-parteForm?.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const fd = new FormData(parteForm);
-  const payload = {
-    type: 'parte',
-    ParteID: 'P-' + Date.now(),
-    Timestamp: new Date().toISOString(),
-    Parque: (fd.get('Parque')||cfg.parque||'').toString(),
-    IncidenteID: (fd.get('IncidenteID')||'').toString(),
-    VehiculoMatricula: (fd.get('VehiculoMatricula')||'').toString(),
-    ConductorNombre: (fd.get('ConductorNombre')||'').toString(),
-    ConductorDNI: (fd.get('ConductorDNI')||'').toString(),
-    Descripcion: (fd.get('Descripcion')||'').toString().slice(0,4000)
+  const form = e.target;
+  const data = {
+    nombre: form.nombre.value.trim(),
+    dni: form.dni.value.trim(),
+    direccion: form.direccion.value.trim(),
+    vehiculo: form.vehiculo.value.trim(),
+    matricula: form.matricula.value.trim(),
+    fotos: [],
+    createdAt: new Date().toISOString()
   };
-  try{
-    const pos = await getPosition({ enableHighAccuracy: false, timeout: 5000 });
-    payload.Coordenadas = `${pos.coords.latitude},${pos.coords.longitude}`;
-  }catch{ payload.Coordenadas = ''; }
-
-  const file = fd.get('Foto');
-  if (file && file.size){
-    payload.FotoName = file.name;
-    payload.FotoType = file.type;
-    payload.FotoBase64 = await fileToBase64(file);
+  const files = form.fotos.files;
+  if (files && files.length > 0) {
+    data.fotos = await fileListToDataURLs(files);
   }
-
-  await enqueueAndSend(qPartsKey, payload);
-  const st = document.getElementById('parte-status');
-  if (st) st.textContent = 'Parte guardado en cola.';
-  parteForm.reset();
-  initParteDefaults();
-  alert('Parte guardado');
-});
-
-function fileToBase64(file){
-  return new Promise((res,rej)=>{
-    const rdr = new FileReader();
-    rdr.onload = ()=>res(rdr.result.split(',')[1]);
-    rdr.onerror = rej;
-    rdr.readAsDataURL(file);
-  });
+  await SepaDB.addRecord(data);
+  form.reset();
+  alert('Registro guardado localmente.');
 }
+
+// 6) Ver datos guardados - render
+async function renderSavedRecords() {
+  const container = document.getElementById('saved-records');
+  container.innerHTML = 'Cargando...';
+  const items = await SepaDB.getAllRecords();
+  if (!items.length) {
+    container.textContent = 'No hay registros guardados todavía.';
+    return;
+  }
+  const parts = [];
+  items.sort((a,b)=> (a.createdAt<b.createdAt?1:-1));
+  for (const it of items) {
+    parts.push(`<div class="card">
+      <div class="card-title">Registro #${it.id || ''}</div>
+      <div class="card-body">
+        <p><b>Nombre:</b> ${it.nombre || ''}</p>
+        <p><b>DNI:</b> ${it.dni || ''}</p>
+        <p><b>Dirección:</b> ${it.direccion || ''}</p>
+        <p><b>Vehículo:</b> ${it.vehiculo || ''}</p>
+        <p><b>Matrícula:</b> ${it.matricula || ''}</p>
+        <p><b>Fecha:</b> ${new Date(it.createdAt).toLocaleString()}</p>
+        ${Array.isArray(it.fotos) && it.fotos.length ? `<div class="photo-grid">` + it.fotos.map(f=>`<img src="${f.dataURL}" alt="${f.name}" />`).join('') + `</div>` : ''}
+      </div>
+    </div>`);
+  }
+  container.innerHTML = parts.join('\n');
+}
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('hidden');
+  if (id === 'view-saved') renderSavedRecords();
+}
+
+window.SepaApp = { openOsmAnd, openMapaGeneral, handleGPS, handleLocalFormSave, showView };
