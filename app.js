@@ -71,18 +71,30 @@ async function getCurrentPositionOnce(timeoutMs=8000){
   });
 }
 
-// 1) Open OsmAnd with intent + fallbacks
-async function openOsmAnd(){
+
+// 1) Abrir OsmAnd normal con Intent explícito
+async function openOsmAnd() {
   const coords = await getCurrentPositionOnce(5000);
   const lat = coords?.latitude ?? 43.36;
   const lon = coords?.longitude ?? -5.84;
-  const intentUri = `intent://show_map?lat=${lat}&lon=${lon}&z=16#Intent;scheme=osmand;package=net.osmand.plus;end`;
+
+  // Intent explícito para OsmAnd normal (no plus)
+  const intentUri = `intent://show_map?lat=${lat}&lon=${lon}&z=16#Intent;action=android.intent.action.VIEW;package=net.osmand;component=net.osmand/.activities.MapActivity;end`;
+
+  // Fallbacks
   const osmandUri = `osmand://show_map?lat=${lat}&lon=${lon}&z=16`;
-  const geoUri    = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
-  window.location.href = intentUri;
-  setTimeout(()=>{ window.location.href = osmandUri; }, 600);
-  setTimeout(()=>{ window.location.href = geoUri; }, 1200);
+  const geoUri = `geo:${lat},${lon}?q=${lat},${lon}(Ubicación)`;
+
+  try {
+    window.location.href = intentUri;
+    // Si falla, probar con esquema osmand:// y geo:
+    setTimeout(() => { window.location.href = osmandUri; }, 800);
+    setTimeout(() => { window.location.href = geoUri; }, 1600);
+  } catch (err) {
+    alert("No se pudo abrir OsmAnd. Asegúrate de tener la app instalada.");
+  }
 }
+
 
 // 2) Registrar coordenadas
 qs('#btn-getloc').addEventListener('click', async ()=>{
