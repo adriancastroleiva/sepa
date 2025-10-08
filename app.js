@@ -63,7 +63,6 @@ function refreshPending(){
 }
 refreshPending();
 
-// ---- MAPA (OsmAnd / geo:) ----
 // ---- MAPA (OsmAnd con varias rutas + fallback geo:) ----
 const tryOpen = (url) => {
   // usar <a> invisible ayuda en PWA standalone
@@ -101,6 +100,7 @@ document.getElementById('btn-open-osmand')?.addEventListener('click', () => {
   setTimeout(() => tryOpen(intentOsmandPlus), 800);
   setTimeout(() => { window.location.href = geo; }, 1200);
 });
+
 
 
 // ---- COORDENADAS ----
