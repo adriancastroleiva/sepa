@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEPA · Mapa de Incidencias</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #0d1117;
+      --surface:   #161b22;
+      --border:    #21262d;
+      --accent:    #e05c2a;
+      --accent2:   #f0a500;
+      --text:      #e6edf3;
+      --muted:     #8b949e;
+      --ok:        #3fb950;
+      --map-bg:    #1a2332;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── HEADER ─────────────────────────────────────────── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 52px;
+      background: var(--surface);
+      border-bottom: 2px solid var(--accent);
+      flex-shrink: 0;
+      gap: 12px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      color: #fff;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    /* ── STATUS BAR ─────────────────────────────────────── */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+    }
+
+    .stat-chip strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ok);
+    }
+
+    .dot.loading {
+      background: var(--accent2);
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    .dot.error {
+      background: #f85149;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    #status-text {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    #btn-refresh {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    #btn-refresh:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── LAYOUT ─────────────────────────────────────────── */
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ────────────────────────────────────────── */
+    aside {
+      width: 280px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    #incident-list {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    #incident-list::-webkit-scrollbar { width: 4px; }
+    #incident-list::-webkit-scrollbar-track { background: transparent; }
+    #incident-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .incident-item {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .incident-item:hover {
+      background: rgba(224, 92, 42, 0.08);
+    }
+
+    .incident-item.active {
+      background: rgba(224, 92, 42, 0.15);
+      border-left: 3px solid var(--accent);
+    }
+
+    .inc-ref {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+    }
+
+    .inc-tip {
+      font-size: 12px;
+      color: var(--text);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .inc-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .badge {
+      background: rgba(224, 92, 42, 0.2);
+      color: var(--accent);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    /* ── MAP ────────────────────────────────────────────── */
+    #map {
+      flex: 1;
+      background: var(--map-bg);
+    }
+
+    /* ── LEAFLET OVERRIDES ──────────────────────────────── */
+    .leaflet-popup-content-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px;
+    }
+
+    .leaflet-popup-tip {
+      background: var(--surface);
+    }
+
+    .popup-ref {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .popup-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 4px;
+      font-size: 12px;
+    }
+
+    .popup-label {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .popup-val {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .leaflet-control-zoom a {
+      background: var(--surface) !important;
+      color: var(--text) !important;
+      border-color: var(--border) !important;
+    }
+
+    .leaflet-control-zoom a:hover {
+      background: var(--border) !important;
+    }
+
+    .leaflet-control-attribution {
+      background: rgba(13,17,23,0.8) !important;
+      color: var(--muted) !important;
+      font-size: 10px !important;
+    }
+
+    .leaflet-control-attribution a {
+      color: var(--muted) !important;
+    }
+
+    /* ── TOAST ──────────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--ok);
+      color: var(--text);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      padding: 10px 16px;
+      border-radius: 6px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── EMPTY STATE ────────────────────────────────────── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--muted);
+      font-size: 12px;
+      gap: 8px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .empty-icon {
+      font-size: 28px;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-mark">S</div>
+    <h1>SEPA · <span>Mapa de Incidencias</span></h1>
+  </div>
+  <div class="status-bar">
+    <div class="stat-chip">
+      <div class="dot loading" id="status-dot"></div>
+      <span id="status-text">Cargando...</span>
+    </div>
+    <div class="stat-chip">
+      Incidencias activas: <strong id="count-inc">—</strong>
+    </div>
+    <div class="stat-chip">
+      Efectivos: <strong id="count-ef">—</strong>
+    </div>
+    <button id="btn-refresh" onclick="loadData()">↺ Actualizar</button>
+  </div>
+</header>
+
+<div class="main">
+  <aside>
+    <div class="sidebar-header">Incidencias activas</div>
+    <div id="incident-list">
+      <div class="empty-state">
+        <div class="empty-icon">⏳</div>
+        Cargando incidencias...
+      </div>
+    </div>
+  </aside>
+  <div id="map"></div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ─────────────────────────────────────────────────────────────
+//  CONFIGURACIÓN
+// ─────────────────────────────────────────────────────────────
+const SITE_URL   = 'https://asturias365.sharepoint.com/sites/SEPA';
+const LIST_NAME  = 'LISTA ESPEJO 112';
+const REFRESH_MS = 15 * 60 * 1000; // 15 minutos
+
+// Campos a recuperar de la REST API
+const SELECT_FIELDS = 'Title,TIPIFICACION,CONCEJO,HORA_CREACION,LATITUD,LONGITUD,NUMERO_RECURSOS_PERSONALES';
+
+// Centro inicial del mapa (Asturias)
+const MAP_CENTER = [43.354, -5.851];
+const MAP_ZOOM   = 8;
+
+// ─────────────────────────────────────────────────────────────
+//  INICIALIZACIÓN DEL MAPA
+// ─────────────────────────────────────────────────────────────
+const map = L.map('map', {
+  center: MAP_CENTER,
+  zoom: MAP_ZOOM,
+  zoomControl: true,
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap contributors © CARTO',
+  subdomains: 'abcd',
+  maxZoom: 19,
+}).addTo(map);
+
+// ─────────────────────────────────────────────────────────────
+//  MARCADORES
+// ─────────────────────────────────────────────────────────────
+let markersLayer = L.layerGroup().addTo(map);
+let activeRef    = null;
+
+function createIcon(isActive) {
+  const color  = isActive ? '#f0a500' : '#e05c2a';
+  const shadow = isActive ? 'rgba(240,165,0,0.6)' : 'rgba(224,92,42,0.5)';
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 40" width="28" height="40">
+      <path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 26 14 26S28 24.5 28 14C28 6.27 21.73 0 14 0z"
+            fill="${color}" filter="drop-shadow(0 2px 4px ${shadow})"/>
+      <circle cx="14" cy="14" r="6" fill="rgba(0,0,0,0.35)"/>
+      <circle cx="14" cy="14" r="3.5" fill="#fff" opacity="0.9"/>
+    </svg>`;
+  return L.divIcon({
+    html: svg,
+    className: '',
+    iconSize: [28, 40],
+    iconAnchor: [14, 40],
+    popupAnchor: [0, -42],
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+//  UTILIDADES UI
+// ─────────────────────────────────────────────────────────────
+function setStatus(state, text) {
+  const dot = document.getElementById('status-dot');
+  dot.className = 'dot ' + (state === 'ok' ? '' : state === 'loading' ? 'loading' : 'error');
+  document.getElementById('status-text').textContent = text;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function fmtHora(raw) {
+  if (!raw) return '—';
+  try {
+    const d = new Date(raw);
+    return d.toLocaleString('es-ES', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+  } catch { return raw; }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  CARGA DE DATOS DESDE SHAREPOINT REST API
+// ─────────────────────────────────────────────────────────────
+async function fetchAllItems() {
+  const url = `${SITE_URL}/_api/web/lists/getbytitle('${encodeURIComponent(LIST_NAME)}')/items` +
+              `?$select=${SELECT_FIELDS}&$top=5000`;
+
+  const resp = await fetch(url, {
+    headers: {
+      'Accept': 'application/json;odata=nometadata',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // usa la sesión SharePoint del usuario
+  });
+
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+  const data = await resp.json();
+  return data.value || [];
+}
+
+// Agrupa items por REFERENCIA (Title) → un objeto por incidencia
+function agruparPorReferencia(items) {
+  const mapa = new Map();
+
+  for (const item of items) {
+    const ref = item.Title;
+    if (!ref) continue;
+
+    const lat = parseFloat(item.LATITUD);
+    const lng = parseFloat(item.LONGITUD);
+    if (isNaN(lat) || isNaN(lng)) continue;
+
+    if (!mapa.has(ref)) {
+      mapa.set(ref, {
+        ref,
+        tipificacion:  item.TIPIFICACION || '—',
+        concejo:       item.CONCEJO       || '—',
+        hora_creacion: item.HORA_CREACION || null,
+        lat,
+        lng,
+        efectivos:     0,
+        recursos:      0,
+      });
+    }
+
+    const inc = mapa.get(ref);
+    inc.efectivos += parseInt(item.NUMERO_RECURSOS_PERSONALES, 10) || 0;
+    inc.recursos  += 1;
+  }
+
+  return Array.from(mapa.values());
+}
+
+// ─────────────────────────────────────────────────────────────
+//  RENDERIZADO
+// ─────────────────────────────────────────────────────────────
+let incidencias = [];
+let markerMap   = new Map(); // ref → marker
+
+function renderMapa(data) {
+  markersLayer.clearLayers();
+  markerMap.clear();
+
+  for (const inc of data) {
+    const marker = L.marker([inc.lat, inc.lng], { icon: createIcon(false) });
+
+    const popup = L.popup({ maxWidth: 260, minWidth: 200 }).setContent(`
+      <div class="popup-ref">${inc.ref}</div>
+      <div class="popup-label">Tipificación</div>
+      <div class="popup-val" style="margin-bottom:6px;">${inc.tipificacion}</div>
+      <div class="popup-row">
+        <div>
+          <div class="popup-label">Concejo</div>
+          <div class="popup-val">${inc.concejo}</div>
+        </div>
+        <div>
+          <div class="popup-label">Efectivos</div>
+          <div class="popup-val">${inc.efectivos}</div>
+        </div>
+      </div>
+      <div class="popup-row" style="margin-top:6px;">
+        <div>
+          <div class="popup-label">Recursos asignados</div>
+          <div class="popup-val">${inc.recursos}</div>
+        </div>
+        <div>
+          <div class="popup-label">Creación</div>
+          <div class="popup-val">${fmtHora(inc.hora_creacion)}</div>
+        </div>
+      </div>
+    `);
+
+    marker.bindPopup(popup);
+
+    marker.on('click', () => {
+      setActiveIncident(inc.ref);
+    });
+
+    marker.addTo(markersLayer);
+    markerMap.set(inc.ref, marker);
+  }
+}
+
+function renderSidebar(data) {
+  const list = document.getElementById('incident-list');
+
+  if (data.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">✓</div>
+        Sin incidencias activas
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = data.map(inc => `
+    <div class="incident-item" id="inc-${inc.ref}" onclick="setActiveIncident('${inc.ref}')">
+      <div class="inc-ref">${inc.ref}</div>
+      <div class="inc-tip">${inc.tipificacion}</div>
+      <div class="inc-meta">
+        <span>${inc.concejo}</span>
+        <span class="badge">${inc.efectivos} ef.</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setActiveIncident(ref) {
+  // Desactivar anterior
+  if (activeRef) {
+    const prevEl = document.getElementById(`inc-${activeRef}`);
+    if (prevEl) prevEl.classList.remove('active');
+    const prevMarker = markerMap.get(activeRef);
+    if (prevMarker) prevMarker.setIcon(createIcon(false));
+  }
+
+  activeRef = ref;
+
+  // Activar nuevo
+  const el = document.getElementById(`inc-${ref}`);
+  if (el) {
+    el.classList.add('active');
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  const marker = markerMap.get(ref);
+  if (marker) {
+    marker.setIcon(createIcon(true));
+    marker.openPopup();
+    map.setView(marker.getLatLng(), Math.max(map.getZoom(), 12), { animate: true });
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  CARGA PRINCIPAL
+// ─────────────────────────────────────────────────────────────
+async function loadData() {
+  setStatus('loading', 'Actualizando...');
+  document.getElementById('btn-refresh').textContent = '↺ ...';
+
+  try {
+    const items = await fetchAllItems();
+    incidencias = agruparPorReferencia(items);
+
+    renderMapa(incidencias);
+    renderSidebar(incidencias);
+
+    const totalEf = incidencias.reduce((s, i) => s + i.efectivos, 0);
+    document.getElementById('count-inc').textContent = incidencias.length;
+    document.getElementById('count-ef').textContent  = totalEf;
+
+    const now = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    setStatus('ok', `Actualizado ${now}`);
+    showToast(`✓ ${incidencias.length} incidencias cargadas`);
+
+  } catch (err) {
+    console.error('Error cargando datos SEPA:', err);
+    setStatus('error', 'Error al cargar datos');
+    document.getElementById('incident-list').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠</div>
+        Error al conectar con SharePoint.<br/>Comprueba que has iniciado sesión.
+      </div>`;
+  } finally {
+    document.getElementById('btn-refresh').textContent = '↺ Actualizar';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  ARRANQUE Y REFRESCO AUTOMÁTICO
+// ─────────────────────────────────────────────────────────────
+loadData();
+setInterval(loadData, REFRESH_MS);
+</script>
+</body>
+</html>
