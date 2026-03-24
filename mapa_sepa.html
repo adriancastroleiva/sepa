@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mapa Operativo SEPA</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --accent: #f97316;
+      --accent2: #fb923c;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --green: #3fb950;
+      --yellow: #d29922;
+      --red: #f85149;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 1000;
+    }
+
+    #topbar .logo {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    #topbar .sep {
+      color: var(--border);
+      font-size: 18px;
+    }
+
+    #count-badge {
+      background: var(--accent);
+      color: #000;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+    }
+
+    #filter-bar {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+      align-items: center;
+    }
+
+    #search-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: 11px;
+      border-radius: 2px;
+      outline: none;
+      width: 200px;
+    }
+    #search-input:focus { border-color: var(--accent); }
+
+    #type-filter {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: 11px;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #type-filter:focus { border-color: var(--accent); }
+
+    #status-filter {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: 11px;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    #reset-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: 10px;
+      letter-spacing: 1px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.15s;
+    }
+    #reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    #map {
+      flex: 1;
+      z-index: 1;
+    }
+
+    /* Leaflet dark override */
+    .leaflet-container {
+      background: #1a1f2e !important;
+    }
+
+    /* Custom popup */
+    .leaflet-popup-content-wrapper {
+      background: var(--surface) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 4px !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+      color: var(--text) !important;
+      font-family: 'Courier New', monospace !important;
+      padding: 0 !important;
+    }
+    .leaflet-popup-tip {
+      background: var(--surface) !important;
+    }
+    .leaflet-popup-content {
+      margin: 0 !important;
+      width: 260px !important;
+    }
+
+    .popup-header {
+      background: var(--accent);
+      color: #000;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .popup-body {
+      padding: 10px 12px;
+    }
+
+    .popup-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+    .popup-row:last-child { border-bottom: none; }
+
+    .popup-label {
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .popup-value {
+      font-size: 11px;
+      color: var(--text);
+      text-align: right;
+      line-height: 1.3;
+    }
+
+    .status-badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .status-activo   { background: rgba(248,81,73,0.2);  color: var(--red);   border: 1px solid var(--red); }
+    .status-resuelto { background: rgba(63,185,80,0.2);  color: var(--green); border: 1px solid var(--green); }
+    .status-pendiente{ background: rgba(210,153,34,0.2); color: var(--yellow);border: 1px solid var(--yellow); }
+    .status-default  { background: rgba(139,148,158,0.2);color: var(--text-muted); border: 1px solid var(--border); }
+
+    .popup-coords {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+      letter-spacing: 0.5px;
+    }
+
+    /* Marker styles */
+    .custom-marker {
+      width: 28px;
+      height: 28px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      border: 2px solid rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Bottom status bar */
+    #statusbar {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 4px 16px;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+
+    #statusbar span { color: var(--accent); }
+
+    #no-data-msg {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 20px 32px;
+      text-align: center;
+      z-index: 500;
+      border-radius: 4px;
+    }
+    #no-data-msg .msg-title { color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 2px; margin-bottom: 8px; }
+    #no-data-msg .msg-sub { color: var(--text-muted); font-size: 10px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="logo">⬡ SEPA · Mapa Operativo</div>
+  <div class="sep">|</div>
+  <div id="count-badge">0 puntos</div>
+  <div class="sep">|</div>
+  <div id="filter-bar">
+    <input id="search-input" type="text" placeholder="Buscar por título..." oninput="applyFilters()" />
+    <select id="type-filter" onchange="applyFilters()">
+      <option value="">— Tipo —</option>
+    </select>
+    <select id="status-filter" onchange="applyFilters()">
+      <option value="">— Estado —</option>
+    </select>
+    <button id="reset-btn" onclick="resetFilters()">Limpiar</button>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<div id="no-data-msg">
+  <div class="msg-title">SIN DATOS</div>
+  <div class="msg-sub">No se han recibido coordenadas.<br>Lanza esta página desde Power Apps<br>con el parámetro <code>?datos=[...]</code></div>
+</div>
+
+<div id="statusbar">
+  <div>Mostrando: <span id="stat-visible">0</span> de <span id="stat-total">0</span></div>
+  <div>Filtros activos: <span id="stat-filters">ninguno</span></div>
+  <div id="stat-coords"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ─── MAPA BASE ───────────────────────────────────────────────────────────────
+const map = L.map('map', {
+  center: [43.35, -5.85],
+  zoom: 9,
+  zoomControl: true,
+  attributionControl: false
+});
+
+// ─── TILES CON FALLBACK AUTOMÁTICO ───────────────────────────────────────────
+// Se prueban en orden hasta que uno funcione
+const tileProviders = [
+  { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',                                                                    opts: { maxZoom: 19 } },
+  { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',                    opts: { maxZoom: 19 } },
+  { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',                     opts: { maxZoom: 19 } },
+  { url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', opts: { maxZoom: 19, subdomains: 'abcd' } },
+];
+
+let currentTileLayer = null;
+let tileProviderIndex = 0;
+
+function tryNextTileProvider() {
+  if (tileProviderIndex >= tileProviders.length) {
+    document.getElementById('stat-filters').textContent = '⚠ Sin tiles — verifica conexión';
+    return;
+  }
+  if (currentTileLayer) map.removeLayer(currentTileLayer);
+  const p = tileProviders[tileProviderIndex];
+  currentTileLayer = L.tileLayer(p.url, p.opts);
+  let errorFired = false;
+  currentTileLayer.on('tileerror', () => {
+    if (!errorFired) { errorFired = true; tileProviderIndex++; setTimeout(tryNextTileProvider, 300); }
+  });
+  currentTileLayer.addTo(map);
+}
+
+tryNextTileProvider();
+
+// ─── DATOS ───────────────────────────────────────────────────────────────────
+let allData   = [];
+let markers   = [];
+let layerGroup = L.layerGroup().addTo(map);
+
+// ─── COLORES POR TIPO ────────────────────────────────────────────────────────
+const typeColors = {};
+const palette = ['#f97316','#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#84cc16'];
+let colorIdx = 0;
+function getColorForType(tipo) {
+  const key = (tipo || 'Sin tipo').toLowerCase();
+  if (!typeColors[key]) { typeColors[key] = palette[colorIdx % palette.length]; colorIdx++; }
+  return typeColors[key];
+}
+
+// ─── CREAR ICONO PERSONALIZADO ───────────────────────────────────────────────
+function makeIcon(color, estado) {
+  const borderColor = estado && estado.toLowerCase() === 'activo' ? '#ff0000' : color;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
+    <path d="M14 0 C6.27 0 0 6.27 0 14 C0 24.5 14 36 14 36 C14 36 28 24.5 28 14 C28 6.27 21.73 0 14 0Z"
+      fill="${color}" stroke="${borderColor}" stroke-width="2" opacity="0.9"/>
+    <circle cx="14" cy="14" r="5" fill="rgba(0,0,0,0.4)"/>
+  </svg>`;
+  return L.divIcon({
+    html: svg,
+    iconSize: [28, 36],
+    iconAnchor: [14, 36],
+    popupAnchor: [0, -36],
+    className: ''
+  });
+}
+
+// ─── BADGE DE ESTADO ─────────────────────────────────────────────────────────
+function statusBadge(estado) {
+  if (!estado) return `<span class="status-badge status-default">—</span>`;
+  const e = estado.toLowerCase();
+  if (e.includes('activ'))   return `<span class="status-badge status-activo">${estado}</span>`;
+  if (e.includes('resuel'))  return `<span class="status-badge status-resuelto">${estado}</span>`;
+  if (e.includes('pend'))    return `<span class="status-badge status-pendiente">${estado}</span>`;
+  return `<span class="status-badge status-default">${estado}</span>`;
+}
+
+// ─── RENDERIZAR MARCADORES ───────────────────────────────────────────────────
+function renderMarkers(data) {
+  layerGroup.clearLayers();
+  markers = [];
+
+  if (!data || data.length === 0) {
+    document.getElementById('stat-visible').textContent = '0';
+    return;
+  }
+
+  const bounds = [];
+
+  data.forEach(punto => {
+    const lat = parseFloat(punto.lat || punto.Latitud || punto.latitud);
+    const lon = parseFloat(punto.lon || punto.Longitud || punto.longitud);
+
+    if (isNaN(lat) || isNaN(lon)) return;
+
+    const color = getColorForType(punto.tipo || punto.Tipo);
+    const icon  = makeIcon(color, punto.estado || punto.Estado);
+
+    const marker = L.marker([lat, lon], { icon });
+
+    const titulo  = punto.titulo  || punto.Titulo  || punto.Title  || 'Sin título';
+    const fecha   = punto.fecha   || punto.Fecha   || '—';
+    const tipo    = punto.tipo    || punto.Tipo    || '—';
+    const estado  = punto.estado  || punto.Estado  || '—';
+
+    const popupHTML = `
+      <div class="popup-header">${titulo}</div>
+      <div class="popup-body">
+        <div class="popup-row">
+          <span class="popup-label">Tipo</span>
+          <span class="popup-value" style="color:${color}">${tipo}</span>
+        </div>
+        <div class="popup-row">
+          <span class="popup-label">Estado</span>
+          <span class="popup-value">${statusBadge(estado)}</span>
+        </div>
+        <div class="popup-row">
+          <span class="popup-label">Fecha</span>
+          <span class="popup-value">${fecha}</span>
+        </div>
+        <div class="popup-coords">
+          📍 ${lat.toFixed(5)}° N, ${lon.toFixed(5)}° E
+        </div>
+      </div>`;
+
+    marker.bindPopup(popupHTML, { maxWidth: 280 });
+    marker._data = punto;
+    layerGroup.addLayer(marker);
+    markers.push(marker);
+    bounds.push([lat, lon]);
+  });
+
+  if (bounds.length > 0) {
+    map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
+  }
+
+  document.getElementById('stat-visible').textContent = markers.length;
+  document.getElementById('count-badge').textContent = markers.length + ' punto' + (markers.length !== 1 ? 's' : '');
+}
+
+// ─── FILTROS ─────────────────────────────────────────────────────────────────
+function applyFilters() {
+  const search = document.getElementById('search-input').value.toLowerCase().trim();
+  const tipo   = document.getElementById('type-filter').value.toLowerCase();
+  const estado = document.getElementById('status-filter').value.toLowerCase();
+
+  const filtered = allData.filter(p => {
+    const t = (p.titulo || p.Titulo || p.Title || '').toLowerCase();
+    const tp= (p.tipo   || p.Tipo  || '').toLowerCase();
+    const es= (p.estado || p.Estado|| '').toLowerCase();
+
+    const matchSearch = !search || t.includes(search);
+    const matchTipo   = !tipo   || tp.includes(tipo);
+    const matchEstado = !estado || es.includes(estado);
+    return matchSearch && matchTipo && matchEstado;
+  });
+
+  renderMarkers(filtered);
+
+  const activeFilters = [search, tipo, estado].filter(Boolean);
+  document.getElementById('stat-filters').textContent = activeFilters.length > 0 ? activeFilters.join(', ') : 'ninguno';
+  document.getElementById('stat-total').textContent   = allData.length;
+}
+
+function resetFilters() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('type-filter').value  = '';
+  document.getElementById('status-filter').value= '';
+  applyFilters();
+}
+
+// ─── POBLAR DROPDOWNS ─────────────────────────────────────────────────────────
+function populateFilters(data) {
+  const tipos   = [...new Set(data.map(p => p.tipo || p.Tipo).filter(Boolean))];
+  const estados = [...new Set(data.map(p => p.estado || p.Estado).filter(Boolean))];
+
+  const tSel = document.getElementById('type-filter');
+  const eSel = document.getElementById('status-filter');
+
+  tipos.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.toLowerCase(); opt.textContent = t;
+    tSel.appendChild(opt);
+  });
+  estados.forEach(e => {
+    const opt = document.createElement('option');
+    opt.value = e.toLowerCase(); opt.textContent = e;
+    eSel.appendChild(opt);
+  });
+}
+
+// ─── LEER DATOS: URL params → fetch JSON → demo ───────────────────────────────
+const DEMO_DATA = [
+  { titulo: "Incendio forestal Siero",   lat: 43.387, lon: -5.664, tipo: "Incendio forestal",  estado: "Activo",    fecha: "2024-09-01 14:32" },
+  { titulo: "Accidente de tráfico A-8",  lat: 43.542, lon: -5.915, tipo: "Accidente tráfico",  estado: "Resuelto",  fecha: "2024-09-01 09:15" },
+  { titulo: "Inundación Gijón centro",   lat: 43.535, lon: -5.661, tipo: "Inundación",          estado: "Pendiente", fecha: "2024-09-01 17:00" },
+  { titulo: "Rescate montaña Pajares",   lat: 43.009, lon: -5.771, tipo: "Rescate montaña",    estado: "Activo",    fecha: "2024-09-01 11:00" },
+  { titulo: "Fuga de gas Oviedo",        lat: 43.362, lon: -5.849, tipo: "Emergencia técnica",  estado: "Resuelto",  fecha: "2024-09-01 08:45" },
+  { titulo: "Incendio urbano Avilés",    lat: 43.557, lon: -5.927, tipo: "Incendio urbano",    estado: "Resuelto",  fecha: "2024-09-01 16:20" },
+  { titulo: "Inundación Cangas de Onís", lat: 43.351, lon: -5.130, tipo: "Inundación",          estado: "Activo",    fecha: "2024-09-01 18:10" },
+];
+
+function setStatus(msg) {
+  document.getElementById('stat-filters').textContent = msg;
+}
+
+async function loadData() {
+  const params = new URLSearchParams(window.location.search);
+
+  // MODO 1: parámetro ?datos=[...] (URLs cortas, <200 puntos aprox.)
+  const datosParam = params.get('datos');
+  if (datosParam) {
+    try {
+      return JSON.parse(decodeURIComponent(datosParam));
+    } catch(e) {
+      setStatus('⚠ Error parseando parámetro datos');
+      return [];
+    }
+  }
+
+  // MODO 2: parámetro ?json=URL_DEL_FICHERO (fichero JSON en SharePoint)
+  // Ejemplo: ?json=https://tenant.sharepoint.com/sites/SEPA/Documentos/datos_mapa.json
+  const jsonUrl = params.get('json');
+  if (jsonUrl) {
+    setStatus('Cargando datos desde SharePoint...');
+    try {
+      const resp = await fetch(jsonUrl, { credentials: 'include' });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      setStatus('ninguno');
+      return Array.isArray(data) ? data : (data.value || []);
+    } catch(e) {
+      setStatus('⚠ Error cargando JSON: ' + e.message);
+      return [];
+    }
+  }
+
+  // MODO 3: busca automáticamente datos_mapa.json en la misma carpeta que este HTML
+  // Útil si subes ambos ficheros juntos a la misma biblioteca de SharePoint
+  const autoUrl = window.location.href.replace(/[^/]*$/, '') + 'datos_mapa.json';
+  try {
+    setStatus('Buscando datos_mapa.json...');
+    const resp = await fetch(autoUrl, { credentials: 'include' });
+    if (resp.ok) {
+      const data = await resp.json();
+      setStatus('ninguno');
+      return Array.isArray(data) ? data : (data.value || []);
+    }
+  } catch(e) { /* silencioso */ }
+
+  // MODO 4: sin datos → demo
+  setStatus('DEMO — sin datos reales');
+  return DEMO_DATA;
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('load', async () => {
+
+  // Cargar datos sin esperar a que los tiles estén listos
+  allData = await loadData();
+
+  document.getElementById('stat-total').textContent = allData.length;
+  document.getElementById('stat-visible').textContent = allData.length;
+
+  if (allData.length === 0) {
+    document.getElementById('no-data-msg').style.display = 'block';
+  } else {
+    document.getElementById('no-data-msg').style.display = 'none';
+    populateFilters(allData);
+    // Pequeño delay para asegurar que el div #map tiene dimensiones
+    setTimeout(() => {
+      map.invalidateSize();
+      renderMarkers(allData);
+    }, 200);
+  }
+
+  map.on('moveend', () => {
+    const c = map.getCenter();
+    document.getElementById('stat-coords').textContent =
+      `Centro: ${c.lat.toFixed(4)}°N ${c.lng.toFixed(4)}°E · Zoom: ${map.getZoom()}`;
+  });
+});
+</script>
+</body>
+</html>

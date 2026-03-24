@@ -1,0 +1,18 @@
+[
+  {
+    "titulo": "El nombre que aparece en NOMBRE",
+    "lat": 43.38700,
+    "lon": -5.66400,
+    "tipo": "Lo que ponga en TIPIFICACION",
+    "estado": "Lo que ponga en ULTIMA_OBSERVACION",
+    "fecha": "2024-09-01 14:32"
+  },
+  {
+    "titulo": "Segundo registro",
+    "lat": 43.54200,
+    "lon": -5.91500,
+    "tipo": "Incendio forestal",
+    "estado": "Controlado",
+    "fecha": "2024-09-01 09:15"
+  }
+]
