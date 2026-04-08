@@ -1,475 +1,188 @@
-Parte,Fecha_Inicio,Concejo,Localidad,Estado,IGP,Latitud,Longitud,Superficie
-0739-27032026,31/03/2026 16:46,Cangas del Narcea,,Extinguido,,43.035276,-6.57251,
-0486-01042026,01/04/2026 17:16,Cudillero,,Extinguido,,43.568551,-6.24822,
-0868-01042026,01/04/2026 23:46,Gijón,,Extinguido,,43.538926,-5.66572,
-0744-02042026,02/04/2026 17:31,Oviedo,,Extinguido,,43.35693,-5.87486,
-0788-02042026,02/04/2026 18:16,Lena,,Extinguido,,43.160115,-5.82892,
-0988-02042026,02/04/2026 21:16,Siero,,Extinguido,,43.381081,-5.7824,
-0157-03042026,03/04/2026 8:01,Cangas del Narcea,SIERO,Extinguido,Moderado (1),43.082684,-6.47802,5
-0418-03042026,03/04/2026 11:46,Tineo,ORDIAL DE LA BARCA,Extinguido,,43.325053,-6.35545,
-0530-03042026,03/04/2026 13:16,Gijón,,Extinguido,,43.538926,-5.66572,
-0648-03042026,03/04/2026 14:46,Oviedo,,Extinguido,,43.35693,-5.87486,
-0685-03042026,03/04/2026 15:28,PILOÑA,PUENTE MIERA, PRAERES DE NAVA,Extinguido,,,,20
-0948-03042026,03/04/2026 19:06,BELMONTE DE MIRANDA,SAN MARTIN DE ONDES,Extinguido,Bajo (0),43.291569,-5.42479,
-0703-03042026,03/04/2026 15:51,PROAZA,LINARES,Extinguido,,,,
-0757-03042026,03/04/2026 16:46,Degaña,CERREDO,Extinguido,Moderado (1),42.946692,-6.4896,1
-0903-03042026,03/04/2026 18:42,LENA,PIÑERA / LA CRUZ,Extinguido,,,,
-0795-03042026,03/04/2026 17:11,TEVERGA,SAN MARTIN,Extinguido,Bajo (0),,,
-0910-03042026,03/04/2026 18:54,PILOÑA,MELARDE,Extinguido,Bajo (0),,,2
-0953-03042026,03/04/2026 19:16,QUIRÓS,SALCEDO,Extinguido,,,,
-1067-03042026,03/04/2026 21:04,PROAZA,SERANDI,Extinguido,,,,
-1075-03042026,03/04/2026 21:16,Valderrey,,Extinguido,,,,
-1122-03042026,03/04/2026 21:35,OVIEDO,TRUBIA,Extinguido,,,,
-1106-03042026,03/04/2026 21:46,Villamanín,,Extinguido,,,,
-0757-03/04/2026,03/04/2026 23:50,DEGAÑA,CERREDO, DETRAS DEL BARRIO LOS TACHO,Extinguido,Moderado (1),,,
-0703-03042026,03/04/2026 1:53,Proaza,Linares,Extinguido,,,,
-0534-04042026,04/04/2026 13:01,Lena,,Extinguido,,43.066665,-5.82184,
-0602-04042026,04/04/2026 13:46,Piloña,CUERRIAS DE MAZA,Extinguido,,43.318018,-5.44366,
-0571-04042026,04/04/2026 13:46,Siero,HEVIA,Extinguido,,43.35689,-5.70008,
-0631-04042026,04/04/2026 14:16,Grado,TEJEDO,Extinguido,,43.296176,-6.15011,
-0655-04042026,04/04/2026 14:31,Salas,TARANO,Extinguido,,43.434616,-6.25553,
-0716-04042026,04/04/2026 15:31,Amieva,MOTA CETIN,Extinguido,,43.282495,-5.19473,
-0799-04042026,04/04/2026 16:46,Regueras (Las),ARECES,Extinguido,,43.407096,-5.99625,4
-0828-04042026,04/04/2026 17:01,Piloña,BIFORCOS,Extinguido,,43.31466,-5.32712,5
-0847-04042026,04/04/2026 17:16,Sobrescobio,LADINES,Extinguido,Bajo (0),43.203479,-5.44478,0,5
-1014-04042026,04/04/2026 19:46,Aller,LA CAMPUETA,Extinguido,Bajo (0),43.15177,-5.72693,
-1061-04042026,04/04/2026 20:16,Proaza,LINARES,Extinguido,Bajo (0),43.280836,-6.02444,
-1064-04042026,04/04/2026 20:16,Corvera de Asturias,MOCÍN,Extinguido,,43.528189,-5.88816,
-1090-04042026,04/04/2026 20:46,Proaza,SERANDI POR ENCIMA DE BUYERA,Extinguido,,43.25597,-5.99375,
-1145-04042026,04/04/2026 21:16,Piloña,MONES,Extinguido,,43.35966,-5.28617,
-1153-04042026,04/04/2026 21:31,Proaza,VILLAMEJÍN,Extinguido,,43.239185,-6.01204,
-1176-04042026,04/04/2026 21:47,Cabrales,ASIEGO,Extinguido,,43.324815,-4.88594,
-1207-04042026,04/04/2026 22:16,Belmonte de Miranda,CASTAÑERA,Extinguido,,43.236232,-6.25103,
-1217-04042026,04/04/2026 22:31,Aller,LLAMAS,Extinguido,,43.106219,-5.57262,
-1234-04042026,04/04/2026 22:46,Siero,VIO, HUERGO, AGUDA, PINZALES,Extinguido,,43.44601,-5.73907,
-0631-04042026,04/04/2026 23:40,GRADO,SANTIANES,Extinguido,,,,
-1014-04042026,04/04/2026 1:49,ALLER,LA CAMPUETA,Extinguido,,,,
-1207-04042026,05/04/2026 12:15,BELMONTE DE MIRANDA,CASTAÑERA,Extinguido,,,,45
-0481-05042026,05/04/2026 12:46,Cabrales,CARREÑA,Extinguido,,43.316779,-4.84586,
-0502-05042026,05/04/2026 13:16,Lena,OTERO,Extinguido,,43.05213,-5.86644,
-0540-05042026,05/04/2026 13:46,Tineo,EL PEDREGAL,Extinguido,,43.372399,-6.36686,3
-0569-05042026,05/04/2026 14:31,Peñamellera Alta,CARAVES,Extinguido,,43.316467,-4.72755,5
-0681-05042026,05/04/2026 16:16,Riosa,,Extinguido,,43.222577,-5.88082,
-0772-05042026,05/04/2026 17:31,Cabrales,,Extinguido,,43.233071,-4.74808,
-0856-05042026,05/04/2026 18:31,Cangas del Narcea,,Extinguido,,43.200922,-6.61406,
-0876-05042026,05/04/2026 18:46,OVIEDO,VILLAR,Extinguido,,43.408654,-6.94687,
-0943-05042026,05/04/2026 20:01,Regueras (Las),ENTRE ANIA Y LAZANA,Extinguido,,43.404106,-5.96903,9
-0964-05042026,05/04/2026 20:16,Lena,PAJARES,Extinguido,,43.031356,-5.78155,
-1017-05042026,05/04/2026 21:16,Zaragoza,,Extinguido,,,,
-1036-05042026,05/04/2026 21:31,Villamanín,,Extinguido,,,,
-1054-05042026,05/04/2026 21:46,Piloña,COLLADA INCOSA,Extinguido,,43.31466,-5.32712,5
-1065-05042026,05/04/2026 21:46,Belmonte de Miranda,TIBLÓS,Extinguido,,43.282569,-6.21837,
-1090-05042026,05/04/2026 22:31,Onís,AVÍN,Extinguido,,43.334779,-4.95161,12
-0010-06042026,06/04/2026 0:16,Grado,BUSTIELLO,Extinguido,,43.401071,-6.06965,
-0014-06042026,06/04/2026 0:31,BELMONTE DE MIRANDA,SIERRA DEL PEDRORIO,Extinguido,,43.320529,-6.09706,400
-0126-06042026,06/04/2026 7:01,Cangas del Narcea,Irrondo de Besullo,Extinguido,Moderado (1),,,
-0160-06042026,06/04/2026 8:31,Amieva,SAN ROMÁN,Extinguido,,43.25703,-5.08901,
-0238-06042026,06/04/2026 11:19,GRADO,LOREDO,Extinguido,Moderado (1),,,3
-0268-06042026,06/04/2026 12:11,Cangas de Onís,Encima del pueblo de Tornín.,Extinguido,,,,
-0309-06042026,06/04/2026 13:30,Illano,,Extinguido,,43.333253,-6.8648,
-0377-06042026,06/04/2026 13:30,San Martín del Rey Aurelio,,Extinguido,,43.276878,-5.6079,
-0315-06042026,06/04/2026 13:30,Allande,Almoño,Extinguido,,43.208217,-6.60039,50
-0335-06042026,06/04/2026 13:30,Grado,El Fresno. ,Extinguido,,43.368885,-6.12361,
-0403-06042026,06/04/2026 13:46,Grado,,Extinguido,,43.262478,-6.15677,
-0482-06042026,06/04/2026 15:01,Ponga,TARANES,Extinguido,Bajo (0),43.200632,-5.21177,
-0580-06042026,06/04/2026 16:46,Piloña,Motosa, entre Pico Felgueroso y Peña del Águila,Extinguido,Moderado (1),43.292566,-5.43169,40
-0610-06042026,06/04/2026 17:16,San Martín de Oscos,RON,Extinguido,,43.277125,-6.94764,
-0648-06042026,06/04/2026 17:46,Langreo,,Extinguido,,43.327541,-5.72948,
-0701-06042026,06/04/2026 18:31,Tineo,Recta de la Vega. ,Extinguido,,43.339955,-6.4745,
-0718-06042026,06/04/2026 19:01,Piloña,Cadapereda,Extinguido,,43.304146,-5.40271,
-0728-06042026,06/04/2026 19:01,Allande,Lantigo,Extinguido,,43.239893,-6.61757,
-0795-06042026,06/04/2026 20:31,Proaza,VILLAMEJIN,Extinguido,,43.239185,-6.01204,3
-0824-06042026,06/04/2026 20:46,Cabrales,Ortiguero, Las Estazadas,Extinguido,Moderado (1),43.329304,-4.95847,
-0818-06042026,06/04/2026 20:46,Belmonte de Miranda,CASTAÑERA,Extinguido,,43.294777,-6.22945,3
-0836-06042026,06/04/2026 21:01,Piloña,COBAYAS,Extinguido,,43.318018,-5.44366,6
-0846-06042026,06/04/2026 21:16,Ponga,TARANES, TÍATORDOS,Extinguido,,43.18103,-5.17371,
-0849-06042026,06/04/2026 21:16,PILOÑA,LLAMES DE PARRES, EL PICO, TOSPE,Extinguido,Moderado (1),43.353885,-5.21549,15
-0867-06042026,06/04/2026 21:31,Cangas del Narcea,Cubo Puerto,Extinguido,,43.201781,-6.6547,
-0902-06042026,06/04/2026 22:01,Cangas de Onís,Llano de Con,Extinguido,,43.328319,-5.0146,10
-0824-06042026,06/04/2026 22:00,CABRALES,CAMARMEÑA,Extinguido,,,,
-0912-06042026,06/04/2026 22:16,Cangas del Narcea,Villacibrán,Extinguido,Bajo (0),43.200922,-6.61406,30
-0907-06042026,06/04/2026 22:16,Tineo,Truébano. ,Extinguido,Moderado (1),43.368107,-6.40757,4
-0935-06042026,06/04/2026 22:46,Cangas del Narcea,PERANDONES,Extinguido,Bajo (0),43.137573,-6.58644,
-0942-06042026,06/04/2026 22:46,Laviana,TOLIVIA,Extinguido,,43.211565,-5.58315,15
-0963-06042026,06/04/2026 23:01,Lena,Alto del Cordal,Extinguido,Moderado (1),43.081426,-5.85938,28
-0990-06042026,06/04/2026 23:31,Cangas de Onís,LA RIERA,Extinguido,Bajo (0),43.324436,-5.07861,5
-0982-06042026,06/04/2026 23:31,Gijón,,Extinguido,,43.509076,-5.77029,
-0994-06042026,06/04/2026 23:46,Amieva,San Román,Extinguido,Bajo (0),43.25703,-5.08901,
-0999-06042026,07/04/2026 0:01,Piloña,VALLES,Extinguido,Bajo (0),43.340493,-5.33284,8
-1001-06042026,07/04/2026 0:01,San Martín del Rey Aurelio,,Extinguido,,43.273383,-5.58933,
-1005-06042026,07/04/2026 0:01,Onís,AVÍN,Extinguido,,43.334779,-4.95161,2
-0014-07042026,07/04/2026 0:31,Grado,Ballongo/ Palacio / Pumarín,Extinguido,,43.308191,-6.02449,2
-0024-07042026,07/04/2026 0:46,Llanes,La Cerezal,Extinguido,,43.428479,-4.80686,
-0068-07042026,07/04/2026 2:31,Cangas de Onís,LABRA,Extinguido,,43.360902,-5.05827,
-0079-07042026,07/04/2026 3:16,OVIEDO,PERLAVIA,Extinguido,,43.333499,-6.01336,
-0895-06042026,07/04/2026 5:46,Morcín,Sierra del Aramo,Extinguido,,43.063604,-5.90945,
-0133-07042026,07/04/2026 6:16,Tineo,PIEDRATECHA,Extinguido,,43.330965,-6.469,
-0851-06042026,07/04/2026 8:01,Cabrales,,Extinguido,,43.258904,-4.83662,
-0177-07042026,07/04/2026 8:31,Onís,,Extinguido,Bajo (0),43.334766,-4.96813,
-0191-07042026,07/04/2026 9:01,Onís,Benia,Extinguido,,43.334766,-4.96813,
-0268-07042026,07/04/2026 11:16,Oviedo,LAS CAMPAS,Extinguido,,43.365973,-5.88831,
-0306-07042026,07/04/2026 12:31,Oviedo,,Extinguido,,43.345524,-5.97262,
-0354-07042026,07/04/2026 13:16,Parres,Tospe,Extinguido,Bajo (0),43.325783,-5.23904,
-0438-07042026,07/04/2026 14:46,Piloña,El Pico,Extinguido,Bajo (0),43.311659,-5.23797,3
-0470-07042026,07/04/2026 15:31,Yernes y Tameza,Yernes,Extinguido,,43.279557,-6.11004,
-0504-07042026,07/04/2026 16:01,Oviedo,Novales,Extinguido,,43.325458,-5.8263,
-0540-07042026,07/04/2026 16:31,Morcín,La Collada,Extinguido,,43.268087,-5.87528,
-0525-07042026,07/04/2026 16:31,Belmonte de Miranda,Carricedo. ,Extinguido,,43.284386,-6.26379,1
-0372-07042026,07/04/2026 13:21,Grado,Rubiano,Extinguido,,,,
-0551-07042026,07/04/2026 16:46,Cangas de Onís,La Riera. ,Extinguido,,43.324436,-5.07861,
-0615-07042026,07/04/2026 18:01,Piloña,ARGANDENES,Extinguido,,43.366861,-5.33219,
-0639-07042026,07/04/2026 18:31,Nava,,Extinguido,,43.346521,-5.48394,
-0963-06042026,07/04/2026 21:28,LENA,ALTO DE EL CORDAL,Extinguido,,,,
-0825-07042026,07/04/2026 21:31,Peñamellera Baja,Cercanías del área recreativa del argayo. ,Extinguido,,43.319344,-4.54003,
-0820-07042026,07/04/2026 21:31,Llanes,Por encima del cementerio de San Roque del Acebal. ,Extinguido,,43.395278,-4.73612,15
-0859-07042026,07/04/2026 22:01,Ribadesella,Abeo.,Extinguido,,43.469144,-5.11138,
-0901-07042026,07/04/2026 23:01,Cangas de Onís,NIEDA,Extinguido,,43.340775,-5.11223,
-0945-07042026,08/04/2026 0:01,Peñamellera Baja,ABANDAMES,Extinguido,,43.325567,-4.60222,
-,26/02/2026 16:26,,PARAJAS,Extinguido,Moderado (1),431210N,063505W,
-,22/03/2026 15:45,,CERCA DE EÓLICOS, SIERRA DE LOS LAGOS,Extinguido,,43º15´15´´,6º43´50´´,2
-,22/03/2026 23:09,,DESDE EL PUERTO DEL PALO, DESVÍO HACIA EL ALTO DE LA MARTA,Extinguido,Bajo (0),,,6
-,24/03/2026 19:10,,CUBOPUERTO, DEBAJO DE LOS EÓLICOS DEL PUERTO DEL PALO,Extinguido,,,,
-,24/03/2026 20:30,,SIERRA DE LA PILA,Extinguido,,,,
-,26/02/2026 18:13,,BELLO,Extinguido,,430825N,053639W,
-,01/03/2026 15:53,,CORDAL DE LA ZORRA. PICO CUETO,Extinguido,Bajo (0),,,3
-,03/03/2026 0:46,,OYANCO,Extinguido,,"43º 11´ 22""","5º 42´ 48""",9
-,04/03/2026 12:15,,Pelugano,Extinguido,,,,
-,04/03/2026 13:34,,Cotobello,Extinguido,,,,
-,04/03/2026 15:57,,LA CORTINA,Extinguido,,,,
-,04/03/2026 21:27,,LLANANZANES,Extinguido,,"43º 3´ 51""","5º 34´ 33""",
-,04/03/2026 22:02,,LA ROZA, COTOBELLO,Extinguido,,"43º 10´ 10""","5º 40´ 45""",0,5
-,13/03/2026 14:18,,XAGUAL,Extinguido,,,,
-,13/03/2026 13:54,,AS-112 PK 38 SUBIENDO AL PUERTO SAN ISIDRO,Extinguido,,,,2
-,20/03/2026 20:24,,LLANAS,Extinguido,,,,28
-,21/03/2026 9:50,,RIOMAÑÓN, SIERRA DE FUENTES DE INVIERNO,Extinguido,,,,
-,21/03/2026 14:39,,BELLO,Extinguido,,,,0,3
-,21/03/2026 22:57,,Por encima de Pelúgano. ,Extinguido,,,,
-,,,Villaverde,Extinguido,Bajo (0),43.256,-5.140,5
-,,,Vega de Sebarga,Extinguido,,43.27682037811383,-5.164087147918789,
-,24/02/2026 15:32,,VILLAVERDE,Extinguido,,43.253,-5.144,5
-,26/02/2026 16:59,,PEN,Extinguido,,43.271,-5.150,
-,02/03/2026 0:00,,ENTRE CIEN Y SAN ROMAN-ARROLLO COLÍN,Extinguido,Moderado (1),43.252,-5.090,
-,02/03/2026 20:34,,QUINTANAL  Y VILLAR DE ZUEPOS,Extinguido,,"43º 13 ´2""","6º 16´ 44""",
-,04/03/2026 19:27,,LONGORIA, SAN BARTOLOME, CAPITULO, SIERRA DEL PEDRORIO, CUTIELLOS // SIERRA DEL PEDRORIO,Extinguido,,43º 20' 32'' N,6º 10' 15'' W,
-,04/03/2026 20:01,,LLAMOSO,Extinguido,,"43º 13´29""","6º 13´ 13""",
-,04/03/2026 21:25,,VILLAR DE ZUEPOS,Extinguido,,"43º 13´ 9""","6º 17´ 65""",
-,04/03/2026 23:07,,Vigaña,Extinguido,,"43º 4´ 53""","5º 51´ 34""",
-,19/03/2026 16:10,,Cercanías del pueblo de Fresneo, subiendo a Las Estacas. ,Extinguido,,"43º17'41""","006º13'46""",
-,19/03/2026 17:12,,Cercanías del pico Porcabezas. ,Extinguido,,43 14 03,06 11 59,2
-,21/03/2026 22:16,,VILLAR DE ZUEPOS,Extinguido,,,,
-,22/03/2026 13:04,,ZONA DEL ACEBAL,Extinguido,Moderado (1),,,
-,02/03/2026 18:38,,LA BARAGAÑA,Extinguido,,43º 20´ 9¨  ,5º  35´ 9¨,1
-,19/03/2026 20:06,,Desde el refugio de Fayacaba hacia Melendreros,Extinguido,,"43º18'44""","005º31'39""",
-,21/03/2026 18:47,,VIÑAY,Extinguido,,43 18 39 N,5 33 29 O,
-,26/02/2026 16:06,,ASIEGO,Extinguido,Bajo (0),,,
-,20/03/2026 20:15,,Alto de Ortiguero,Extinguido,,,,1
-,21/03/2026 13:29,,PICO IBEU,Extinguido,,,,15
-,23/03/2026 17:40,,COLLADAS,Extinguido,,,,30
-,23/03/2026 21:47,,CARREÑA,Extinguido,Bajo (0),43 19 0 N  ,4 50 45 O,
-,24/03/2026 20:29,,ASIEGO,Extinguido,,,,
-,24/03/2026 20:28,,INCOS,Extinguido,,,,0,5
-,01/03/2026 13:22,,Llamero,Extinguido,,,,
-,,,Llano de Con,Extinguido,,43.323031993147744,-5.019543044708619,12
-,,,Nieda,Extinguido,,43.341078618735736,-5.121333291224399,
-,,,Zardón,Extinguido,,43.394,-5.037,
-,26/02/2026 17:46,,TARANO,Extinguido,Moderado (1),432148N,050219W,
-,02/03/2026 10:20,,ENTRE NIEDA Y SEGÜENCO,Extinguido,,43.330494,-5.114339,
-,02/03/2026 13:40,,ZARDÓN,Extinguido,,43º22´35´´,05º02´06´´,2
-,03/03/2026 18:37,,LLERICES,Extinguido,Moderado (1),"43º 18´ 44""","5º 3´ 35""",1
-,03/03/2026 20:10,,SANTIANES DE OLA,Extinguido,Bajo (0),43.40333,-5.04583,
-,04/03/2026 12:10,,Següenco,Extinguido,,,,
-,04/03/2026 14:34,,TÁRANO,Extinguido,,,,
-,04/03/2026 19:10,,LLENIN,Extinguido,,,,
-,20/03/2026 16:08,,Llano de Con,Extinguido,Bajo (0),,,0,8
-,24/03/2026 20:29,,OLICIO,Extinguido,Bajo (0),,,
-,,,Porciles-Ridera,Extinguido,Moderado (1),43.161,-6.390,100
-,26/02/2026 17:11,,Ridea,Extinguido,,43.1680,-6.3998,
-,26/02/2026 17:21,,PARADA LA VIEJA,Extinguido,Moderado (1),430401N,062312W,200
-,03/03/2026 9:32,,PARADA LA NUEVA,Extinguido,Bajo (0),"43º 9´ 8""","6º 26´ 58""",5
-,04/03/2026 13:42,,La Linde,Extinguido,,,,
-,24/03/2026 12:38,,LA CUITADA,Extinguido,,,,25
-,26/03/2026 17:52,,Parrondo,Extinguido,Bajo (0),,,
-,27/03/2026 20:55,,Noceda de Rengos, zona de La Cuitada,Extinguido,Bajo (0),43º2´7´´,6º34´21´´,40
-,12/03/2026 12:32,,El Fito,Extinguido,,,,
-,,,Pendones,Extinguido,,43.15279641525894,-5.243275698360225,
-,01/03/2026 19:51,,BUERES,Extinguido,,431301N,052053W,7
-,19/03/2026 16:17,,Pandiella,Extinguido,,"43º10'36""","005º23'58""",25
-,24/03/2026 16:56,,NIEVES,Extinguido,,,,10
-,24/03/2026 17:30,,LA FELGUERINA,Extinguido,,43 09 05,05 22 26,
-,13/03/2026 13:44,,EL FORCÓN,Extinguido,,,,
-,24/03/2026 18:05,,LASTRES, CERCA DEL FARO,Extinguido,,,,
-,03/03/2026 20:09,,FOMBONA ,Extinguido,Bajo (0),"43º 36´ 47""","5º 49´ 49""",0,05
-,01/03/2026 14:38,,RESTIELLO-VILLAZOY,Extinguido,Moderado (1),43.2706,-6.1758,2
-,01/03/2026 15:32,,LA TEJERA - SOMBRONES,Extinguido,,43.2665,-6.1692,3
-,01/03/2026 18:11,,VILLAMARIN DE SALCEDO,Extinguido,Bajo (0),,,1
-,02/03/2026 14:43,,VILLAZHOY,Extinguido,,43º  19´ 14¨  ,6º  5´  49¨ ,1
-,03/03/2026 17:21,,TRILLAPEÑA,Extinguido,Bajo (0),"43º 18´ 49""","6º 5´ 55""",4
-,03/03/2026 23:14,,Rubiano,Extinguido,Bajo (0),43.3067,-6.1079,6
-,04/03/2026 19:29,,LLAMAS,Extinguido,Bajo (0),,,
-,05/03/2026 10:55,,LAS MURIAS,Extinguido,,,,
-,13/03/2026 10:44,,RESTIELLO,Extinguido,,43º17´21´´,6º10´49´´,
-,17/03/2026 15:59,,VILLAHIZOY,Extinguido,,,,
-,17/03/2026 18:31,,ROZALLANA,Extinguido,,,,
-,19/03/2026 21:01,,Murias,Extinguido,,"43º19'12""","06º5'31""",
-,20/03/2026 14:51,,VILLAHIZOY,Extinguido,Bajo (0),,,2
-,21/03/2026 11:38,,BARZANA,Extinguido,,,,4
-,21/03/2026 17:20,,El Merín de Arriba,Extinguido,,43 22 27 N,6 03 16 O,3
-,21/03/2026 22:06,,BALLONGO,Extinguido,,,,
-,24/03/2026 18:52,,VILLANDÁS,Extinguido,Bajo (0),,,10
-,24/03/2026 22:15,,RUBIANO,Extinguido,Bajo (0),,,2,5
-,,,La Mesa,Extinguido,,43.21777870253468,-6.8105220858063165,
-,01/03/2026 19:24,,LADA- PANDO LA LLANA,Extinguido,,,,0,25
-,20/03/2026 15:42,,Lada - detrás del cementerio.,Extinguido,,,,1,5
-,,,Pico La Vara,Extinguido,,43.234528,-5.592809,60
-,,,Los Tornos,Extinguido,,,,
-,,,Ferrera,Extinguido,,43.25448417489461,-5.512056811505801,2
-,01/03/2026 15:14,,ENTRE BAUA Y GAMONAL,Extinguido,,43.2322,-5.5479,0,5
-,01/03/2026 17:50,,LAS BORIAS,Extinguido,Bajo (0),,,0,5
-,01/03/2026 18:56,,LA REBOLLADA,Extinguido,,,,1
-,02/03/2026 14:45,,LORIO,Extinguido,,"43º  12´  24""",5º  30´ 38¨,5
-,04/03/2026 18:04,,LORÍO,Extinguido,Bajo (0),,,
-,04/03/2026 19:59,,FEBRERO,Extinguido,,"43º 12´ 25""","5º 33´ 23""",
-,17/03/2026 15:41,,Las Palomas,Extinguido,,,,
-,23/03/2026 17:02,,LLOREO,Extinguido,,,,0,8
-,23/03/2026 20:04,,LA REBOLLADA,Extinguido,,,0.02,
-,24/03/2026 18:04,,VALLE DE TIRAÑA,Extinguido,,,,8
-,,,Pajares,Extinguido,,43.032 ,-5.778,
-,,,Columbiello,Extinguido,,43.142 ,-5.792,100
-,24/02/2026 21:30,,Armada,Extinguido,,43.164,-5.885,40
-,,,Flor de Acebos,Extinguido,,43.142,-5.792,
-,26/02/2026 17:06,,Parana,Extinguido,,43.08331215379019,-5.7624432742639105,
-,,,Congostinas,Extinguido,,43.09867164449745,-5.774744656356204,
-,26/02/2026 17:31,,Pola de Lena,Extinguido,,430936N,054944W,
-,27/02/2026 4:03,,ARMADA,Extinguido,,43.161,-5.887,5
-,03/03/2026 20:05,,PAJARES,Extinguido,,"43º 1´ 5""","5º 46´ 23""",0,1
-,04/03/2026 17:59,,AP-66 KM 68 A MANO DERECHA SENTIDO LEÓN, HACIA LA CUBILLA,Extinguido,,"43º 4´53""","5º 51´ 53""",
-,04/03/2026 20:19,,CONGOSTINAS,Extinguido,Moderado (1),"43º 5´43""","5º 43´4""",15
-,19/03/2026 15:05,,Piedraceda, subiendo para La Cobertoria. ,Extinguido,,"43º9'10""","005º51'3""",
-,19/03/2026 20:09,,Jomezana,Extinguido,,"43º4'53""","05º51'34""",10
-,19/03/2026 20:59,,Al oeste de Jomezana,Extinguido,,"43º03'18""","05º52'01""",
-,21/03/2026 15:20,,Tuiza de Abajo,Extinguido,,,,0,5
-,21/03/2026 18:44,,zureda,Extinguido,,,,
-,21/03/2026 20:08,,La Peral,Extinguido,,,,5
-,22/03/2026 22:19,,Montes Ranero,Extinguido,,43 4 53 N,5 51 33 O,0,04
-,23/03/2026 14:20,,TUIZA, AP-66 SENTIDO ASTURIAS A LA IZDA.,Extinguido,,,,
-,23/03/2026 20:57,,PAJARES,Extinguido,,,,
-,24/03/2026 13:27,,La Cortina, vertiente sur del Pico La Tesa,Extinguido,,,,3
-,24/03/2026 22:33,,JOMEZANA,Extinguido,Bajo (0),,,
-,,,Llosa de Viango,Extinguido,,43.377,-4.810,35
-,,,Porrúa,Extinguido,,43.40703200078378,-4.814941669984813,
-,26/02/2026 17:11,,LA BORBOLLA,Extinguido,,43.354 ,-4.667,
-,26/02/2026 17:13,,LLN-7,PK.5,Extinguido,,,,
-,26/02/2026 19:27,,EL MAZUCO (LA TORNERIA),Extinguido,,432254N,045104W,0,5
-,26/02/2026 21:01,,EL MAZUCO (CAPILLA),Extinguido,Bajo (0),432254N,045104W,
-,28/02/2026 12:07,,Carretera A-8, pk-309,Extinguido,,,,
-,28/02/2026 12:43,,Ovio,Extinguido,,,,
-,02/03/2026 15:48,,LA PEREDA, FRENTE A PORRÚA,Extinguido,Bajo (0),"43º 23´ 59""",4º 46´ 17¨,2
-,04/03/2026 17:57,,Llamigo,Extinguido,,,,
-,04/03/2026 21:21,,GUADAMÍA,Extinguido,,,,
-,20/03/2026 20:02,,LADERA PICO JANA - ALEVIA - LA BORBOLLA,Extinguido,,,,
-,,,Tablado,Extinguido,,43.248612608362244,-5.742887167690397,
-,,,Llano La Tabla,Extinguido,,43.245,-5.803,
-,,,Turón,Extinguido,,43.20512379034632,-5.751660270743334,4
-,,,Santo Emiliano,Extinguido,,,,
-,,,San Justo,Extinguido,,43.21197790481734,-5.712375824277031,30
-,,,VILLANDIO,Extinguido,,431229N,054148W,
-,04/03/2026 18:25,,URBIÉS,Extinguido,Moderado (1),"43º 13´ 59""","5º 45´ 8""",12
-,05/03/2026 8:43,,LA FELGUERA (TURON),Extinguido,Alto (2),,,
-,17/03/2026 22:31,,URBIES,Extinguido,,,,15
-,20/03/2026 14:12,,BAIÑA,Extinguido,Bajo (0),43º 16´ 31¨,5º 49´ 31¨,1
-,20/03/2026 22:02,,Al sur de la Güeria de Urbiés, debajo del pico de la Burra blanca. ,Extinguido,,"43º13'59""","5º45'7""",3
-,01/03/2026 20:24,,ARGAME,Extinguido,,431745N,055421W,
-,01/03/2026 22:40,,EL PRADIQUIN,Extinguido,Alto (2),431530N,055152W,2,5
-,02/03/2026 11:53,,EL PRADIQUIN,Extinguido,,,,
-,03/03/2026 18:53,,CARDEO,Extinguido,Bajo (0),"43º 17´ 13""","5º 53´ 35""",5
-,17/03/2026 16:38,,ARGAME,Extinguido,,,,
-,17/03/2026 21:28,,LA COLLADA,Extinguido,,,,
-,21/03/2026 14:01,,PRADIQUÍN, FRENTE AL MONSACRO,Extinguido,,,,1
-,21/03/2026 20:10,,EL PRADIQUIN,Extinguido,,"43º15'26""","05º51'20""",
-,27/03/2026 20:57,,N-634, ENTRE EL LLAGAR ESTRADA Y CARNICAS FRANCISCO MARTINEZ,Extinguido,,,,
-,,,Bobia-Demués,Extinguido,,43.349, -4.993,
-,,,Sirviella,Extinguido,,43.34344374260158,-4.975017278801907,
-,,,Gamonedo,Extinguido,,43.30192368545289,-4.99795164862097,
-,18/03/2026 15:39,,La Robellada,Extinguido,Bajo (0),"43º20'24""","04º54'52""",5
-,18/03/2026 22:56,,Entre Avín y Benia de Onís,Extinguido,,,,3
-,19/03/2026 22:44,,Benia de Onís,Extinguido,,,,
-,21/03/2026 0:21,,La Robellada,Extinguido,Moderado (1),"43º20'35""","004º55'26""",
-,24/03/2026 9:54,,Soñín / Zona de Gamonedo,Extinguido,,43 17 20,04 58 25,15
-,25/03/2026 0:02,,SIRVIELLA,Extinguido,,,,0,5
-,18/03/2026 20:09,,Tudela Veguín,Extinguido,,,,
-,19/03/2026 17:09,,Polígono de Olloniego II, junto al campo de fútbol Arturo Villar. ,Extinguido,,"43º19'9""","05º48'4""",
-,24/03/2026 20:27,,LAS CALDAS,Extinguido,,,,
-,,,Las Coronas,Extinguido,,43.42148384167111,-5.176425705979611,7
-,26/02/2026 16:29,,Cuadroveña,Extinguido,Bajo (0),432322N,051109W,
-,02/03/2026 4:14,,ABALLE, AL SW,Extinguido,,,,
-,18/03/2026 20:19,,Llames de Parres,Extinguido,Moderado (1),"43º21'14""","005º12'56""",1
-,21/03/2026 18:42,,MOTA CETIN,Extinguido,Bajo (0),43 22 23N,05 10 38 O,0,05
-,,,Alles,Extinguido,,43.339045821515434,-4.700026480808428,
-,,,Llonín,Extinguido,,43.338,-4.649,35
-,04/03/2026 21:30,,ROZAGAS,Extinguido,,"43º 19´ 38""","4º 46´1""",1
-,22/03/2026 11:04,,ROZAGAS,Extinguido,,,,
-,22/03/2026 13:00,,ENTRE ROZAGAS Y ALLES,Extinguido,,,,
-,19/03/2026 18:09,,ALEVIA, ladera pico Jana,Extinguido,,"43º21'05""","004º37'34""",
-,23/03/2026 23:09,,SIEJO,Extinguido,,43 19 42 N,4 35 8 O,0,5
-,,,Rozapanera,Extinguido,,43.287,-5.368,
-,,,Porciles,Extinguido,,43.303,-5.335,
-,,,Pesquerín,Extinguido,,43.33685081862673,-5.280977069159735,0,2
-,,,Vegarrionda,Extinguido,,43.30913437668005,-5.413166370189767,8
-,,,La Cueva,Extinguido,,43.35030069920145,-5.386603816041107,50
-,,,La Armada,Extinguido,,43.32276561230018,-5.268098468029614,40
-,26/02/2026 18:14,,CARDES,Extinguido,,432134N,051822W,
-,26/02/2026 20:35,,ESPINAREDO (PICU FRESNO),Extinguido,Moderado (1),431657N,051943W,
-,26/02/2026 21:11,,PRIEDE,Extinguido,,432036N,051538W,
-,26/02/2026 21:21,,CARDES,Extinguido,Bajo (0),432020N,051922W,
-,01/03/2026 13:28,,OTERO,Extinguido,,,,
-,03/03/2026 7:56,,EL Moro - Sierra del Sellón,Extinguido,Moderado (1),"43º 16´ 20""","5º 23´ 36""",0,01
-,02/03/2026 13:23,,LOZANA,Extinguido,,43º19´35´´N,05º22`31´´W,1,5
-,02/03/2026 17:52,,Porciles,Extinguido,,"43º 18´  36""","5º  21´ 6""",
-,03/03/2026 8:26,,ENTRE EL MORO Y RIOFABAR, SIERRA DEL SELLÓN,Extinguido,Moderado (1),43.273432,5.397223,
-,04/03/2026 20:06,,RIOFABAR,Extinguido,,"43º 16´ 44""","5º 21´ 44""",20
-,17/03/2026 16:37,,PESQUERIN,Extinguido,,,,
-,17/03/2026 17:23,,EL PICO,Extinguido,,,,8
-,20/03/2026 8:08,,CUEVAS,Extinguido,,,,
-,20/03/2026 11:07,,LA MATOSA,Extinguido,,43º 19´ 7¨,5º 15´ 38¨ ,3
-,21/03/2026 18:10,,BORINES,Extinguido,,43 23 20 N,5 19 09 O,0,05
-,22/03/2026 13:07,,SORRIBAS,Extinguido,,,,
-,22/03/2026 19:24,,TORÍN,Extinguido,,,,
-,24/03/2026 20:26,,RIOFABAR,Extinguido,,,,
-,24/03/2026 20:47,,CAPAREDA, OBANA,Extinguido,,,,
-,24/03/2026 21:33,,INFIESTO,Extinguido,,,,
-,24/03/2026 22:12,,VIYAO,Extinguido,,,,
-,25/03/2026 1:06,,LA FRECHA,Extinguido,,,,
-,,,Cazo,Extinguido,,43.26893622966849,-5.206114005895235,
-,,,Beleño,Extinguido,,43.194722,-5.159722,
-,26/02/2026 16:06,,SOBREFOZ,Extinguido,,431015N,051034W,
-,01/03/2026 12:57,,Pico Pierzu, zona Norte,Extinguido,,,,
-,18/03/2026 12:33,,ABIEGOS Y SOBREFOZ,Extinguido,,,,7
-,24/03/2026 14:19,,PICO MAOÑO, ZONA DE VALLE DE MORO,Extinguido,Bajo (0),,,
-,24/03/2026 20:47,,LINARES,Extinguido,,,,4
-,02/03/2026 20:19,,RICABO,Extinguido,Bajo (0),"43º 6´ 45""","5º  58´ 33""",8
-,20/03/2026 19:59,,Las LLanas,Extinguido,,,,
-,27/03/2026 19:32,,Bermiego,Extinguido,,,,
-,26/02/2026 18:05,,LLOVIO,Extinguido,,432620N,050320W,
-,28/02/2026 11:15,,Carreta A-8, p.k.-315, PI de Guadamía,Extinguido,,,,
-,04/03/2026 12:12,,Área recreativa Viapará,Extinguido,,,,
-,,,Buscabrero,Extinguido,,43.45383999397854,-6.308376265964583,1
-,21/03/2026 13:45,,FAEDO,Extinguido,Moderado (1),,,
-,24/03/2026 14:34,,LAS GALLINAS,Extinguido,Bajo (0),,,2
-,26/02/2026 16:28,,RIOLAPIEDRA,Extinguido,,431533N,053527W,
-,26/02/2026 20:47,,LA ROTURA,Extinguido,,431706N,053653W,
-,03/03/2026 11:16,,LA CASILLA,Extinguido,,,,
-,04/03/2026 15:56,,LOS ARTOS,Extinguido,,,,
-,21/03/2026 20:07,,EL MADREÑERO,Extinguido,,"43º28'2""","6º0'30""",
-,04/03/2026 18:03,,LAMUÑO,Extinguido,,,,
-,18/03/2026 20:08,,Tiñana,Extinguido,,,,
-,,,La Falguera,Extinguido,,43.129348224376415,-6.229474305918906,
-,26/02/2026 16:32,,Sierra de la Cabra,Extinguido,,431102N,062007W,
-,26/02/2026 16:33,,LA FALGUERA,Extinguido,,430658N,061314W,
-,28/02/2026 19:04,,VALLE DEL LAGO,Extinguido,,,,0,03
-,,,Vigidel,Extinguido,,43.14270559784672,-6.144841154584782,
-,01/03/2026 19:44,,CUÑA,Extinguido,,,,1
-,17/03/2026 17:32,,ENTRE GRADURA Y LA SENDA DEL OSO,Extinguido,,,,
-,,,Piedratecha,Extinguido,,43.32808488982674,-6.474536187161833,0,1
-,02/03/2026 9:54,,LOS TORNOS,Extinguido,,06º22´ 18.0´´W,43º13´9.0´´N,40
-,03/03/2026 21:07,,LA CASA´L PUERTO,Extinguido,,,,
-,20/03/2026 2:38,,TUÑA,Extinguido,,,,
-,20/03/2026 20:50,,El Pedregal,Extinguido,,,,2
-,22/03/2026 21:05,,FUENTES,Extinguido,Bajo (0),43 25 23 N,6 35 6 O,
-,25/03/2026 0:14,,LA CEBEDAL,Extinguido,,,,
-,30/03/2026 17:05,,Folgueras del Río,Extinguido,Bajo (0),43 26 51 N,6 34 57 O,3
-,20/03/2026 7:37,,Espiniella de Arriba,Extinguido,Moderado (1),43.48496508360483,-6.337028126212451,3
-,27/02/2026 3:50,,ESPINIELLA,Extinguido,,43.4855,-6.3333,9
-,20/03/2026 8:02,,ESPINIELLA DE ARRIBA, CERCA DE LOS EÓLICOS,Extinguido,,43º 32´ 49¨,6º  29´ 20¨,3
-,05/03/2026 9:33,,,Extinguido,,,,
-,02/03/2026 18:31,,LA ZORERA,Extinguido,,43º 27´ 53¨ ,"6º  41´ 51""",0,02
-0040-01042026,01/04/2026 2:01,Peñamellera Baja,,Falsa Alarma,,43.328408,-4.58575,
-1104-02042026,02/04/2026 22:46,Candamo,,Falsa Alarma,,43.462138,-6.09695,
-0373-03042026,03/04/2026 11:16,Grado,,Falsa Alarma,,43.320529,-6.09706,
-0395-03042026,03/04/2026 11:31,Langreo,,Falsa Alarma,,43.310652,-5.71726,
-1108-03042026,03/04/2026 21:31,San Martín del Rey Aurelio,VILLAR,Falsa Alarma,,,,
-1089-03042026,03/04/2026 21:31,Regueras (Las),ARECES,Falsa Alarma,,43.407096,-5.99625,
-0598-04042026,04/04/2026 13:46,Piloña,,Falsa Alarma,,43.309441,-5.44806,
-1142-04042026,04/04/2026 21:16,Cangas de Onís,CUERRES,Falsa Alarma,,43.373036,-5.00428,
-0490-05042026,05/04/2026 13:01,Amieva,PEN,Falsa Alarma,,43.264002,-5.15389,
-1014-05042026,05/04/2026 21:01,Navia,,Falsa Alarma,,43.549516,-6.70563,
-1080-05042026,05/04/2026 22:00,Grado,BASELGAS,Falsa Alarma,,43.310133,-6.06512,
-0002-06042026,06/04/2026 0:16,Bimenes,MONTE CARROZAL,Falsa Alarma,,43.319339,-5.5598,
-0034-06042026,06/04/2026 1:16,San Martín del Rey Aurelio,EL CORVERO,Falsa Alarma,,43.318517,-5.59862,
-0043-06042026,06/04/2026 1:31,Langreo,PICO ESCOBÍN/ PICO ARENERO,Falsa Alarma,,43.290493,-5.7009,
-0065-06042026,06/04/2026 2:31,Ribera de Arriba,BUEÑO,Falsa Alarma,,43.315483,-5.89706,
-0497-06042026,06/04/2026 15:16,Cudillero,,Falsa Alarma,,43.568551,-6.24822,
-0559-06042026,06/04/2026 16:31,Piloña,,Falsa Alarma,,43.288628,-5.33247,
-0560-06042026,06/04/2026 16:31,Belmonte de Miranda,,Falsa Alarma,,43.294777,-6.22945,
-0586-06042026,06/04/2026 16:46,Piloña,,Falsa Alarma,,43.31466,-5.32712,
-0713-06042026,06/04/2026 18:46,Grado,LA CABORNA,Falsa Alarma,,43.380421,-6.01313,
-0913-06042026,06/04/2026 22:16,Parres,,Falsa Alarma,,43.368507,-5.22248,
-0954-06042026,07/04/2026 5:31,Grado,BASELGAS,Falsa Alarma,,43.310133,-6.06512,
-0141-07042026,07/04/2026 6:46,Salas,Viescas,Falsa Alarma,,43.368388,-6.25569,
-0566-07042026,07/04/2026 17:01,Tineo,,Falsa Alarma,,43.3617,-6.65451,
-0599-07042026,07/04/2026 17:31,Piloña,,Falsa Alarma,,43.364618,-5.40738,
-0610-07042026,07/04/2026 18:01,Nava,,Falsa Alarma,,43.354399,-5.44846,
-0670-07042026,07/04/2026 19:16,Nava,Sierra de Peñamayor. ,Falsa Alarma,,43.338297,-5.49649,
-0669-07042026,07/04/2026 19:16,Cabranes,Entre Grandeño y Lodeña. ,Falsa Alarma,,43.391661,-5.38528,
-0703-07042026,07/04/2026 19:31,Piloña,,Falsa Alarma,,43.340493,-5.33284,
-0723-07042026,07/04/2026 19:46,Sariego,,Falsa Alarma,,43.415757,-5.52238,
-0734-07042026,07/04/2026 20:01,Piloña,,Falsa Alarma,,43.359573,-5.30619,
-0754-07042026,07/04/2026 20:16,Piloña,Valles,Falsa Alarma,,43.367568,-5.3138,
-0793-07042026,07/04/2026 20:46,Tineo,Calabazos. ,Falsa Alarma,,43.313278,-6.31343,
-0938-07042026,08/04/2026 0:01,Piloña,VILLAMAYOR,Falsa Alarma,,,,
-0022-08042026,08/04/2026 0:46,Cangas de Onís,SEGUENCO,Falsa Alarma,,43.327063,-5.07282,
-0034-08042026,08/04/2026 1:16,Llanera,SAN CUCAO,Falsa Alarma,,43.431346,-5.88277,
-0032-08042026,08/04/2026 1:16,Salas,POLES,Falsa Alarma,,43.399063,-6.26879,
-,,,Boo,Falsa Alarma,,43.146,-5.782,
-,02/03/2026 14:39,,CABAÑAQUINTA,Falsa Alarma,,43º  9´  41¨,"5ª  37´ 19""",
-,04/03/2026 21:28,,CABAÑAQUINTA,Falsa Alarma,,,,
-,31/03/2026 12:00,,PRUEBA,Falsa Alarma,,,,
-,20/03/2026 19:22,,CIGÜEDRES,Falsa Alarma,,"43º13´46""","6º16´18""",
-,02/03/2026 20:36,,ASIEGO,Falsa Alarma,,"43º 19´ 32""","4º 51´ 49""",
-,04/03/2026 14:34,,ZARDON,Falsa Alarma,,,,
-,04/03/2026 0:31,,Abantro,Falsa Alarma,,43.2037,-5.3898,
-,28/03/2026 5:57,,A-8  SERÍN EN MARGEN DERECHO SENTIDO GIJÓN,Falsa Alarma,,,,
-,19/03/2026 19:13,,San Adriano del Monte. ,Falsa Alarma,,"43º17'16""","06º3'35""",
-,25/03/2026 1:41,,HISPANES,Falsa Alarma,,,,
-,05/03/2026 15:22,,Ciaño,Falsa Alarma,,,,
-,03/03/2026 14:07,,LA ROMÍA,Falsa Alarma,,,,
-,17/03/2026 20:39,,N-630, PK.85 ,Falsa Alarma,,,,
-,17/03/2026 21:29,,AP-66, PK. 77 DIRECCIÓN LEÓN,Falsa Alarma,,,,
-,18/03/2026 20:10,,Pajares,Falsa Alarma,,,,
-,17/03/2026 13:56,,Al sur del Alto de la Tornería,Falsa Alarma,,"43º 22' 44""","04º 49' 19""",
-,18/03/2026 20:26,,Entre Porrúa y Poo,Falsa Alarma,,,,
-,23/03/2026 18:25,,LA MAÑAGA,Falsa Alarma,,,,
-,13/03/2026 17:19,,Urbies,Falsa Alarma,,,,
-,18/03/2026 22:19,,Inmediaciones del Pico Polio.,Falsa Alarma,,"43º13'51""","005º43'5""",
-,02/03/2026 10:33,,LLAMES DE PARRES,Falsa Alarma,,,,
-,03/03/2026 20:46,,EL PICO,Falsa Alarma,,,,
-,17/03/2026 21:27,,CANTODOVA,Falsa Alarma,,,,
-,21/03/2026 18:49,,EL MORO,Falsa Alarma,,,,
-,22/03/2026 19:27,,SANTIANES,Falsa Alarma,,,,
-,25/03/2026 10:58,,PANDAVENES,Falsa Alarma,,,,
-,05/03/2026 2:35,,Ovanes,Falsa Alarma,,"43º 19´ 14""","6º 5´49""",
-,02/03/2026 19:22,,HUERIA CARROCERA,Falsa Alarma,,"43º17´19""","5º37´26""",
-,03/03/2026 20:17,,LA ENCARNADA,Falsa Alarma,,,,
-,04/03/2026 16:16,,LA CAMPETA,Falsa Alarma,,,,
-,18/03/2026 3:12,,,Falsa Alarma,,,,
-,27/03/2026 19:33,,FUENTESPINO,Falsa Alarma,,,,
-,03/03/2026 21:50,,LAS MORTERAS,Falsa Alarma,,,,
-,05/03/2026 10:55,,la Riera,Falsa Alarma,,,,
-,22/03/2026 12:58,,VEIGAS, FRENTE A LINARES,Falsa Alarma,Bajo (0),,,
-,17/03/2026 20:37,,MERILLÉS,Falsa Alarma,,,,
-,18/03/2026 19:56,,Alto de los Corros,Falsa Alarma,,43 24 06,06 24 30,
-0700-03042026,03/04/2026 15:46,Peñamellera Baja,BORES-TOBES,Quema Controlada,,43.294224,-4.61242,
-0700-03042026,03/04/2026 15:50,PEÑAMELLERA BAJA,BORES-TOBES,Quema Controlada,,,,
-0934-03042026,03/04/2026 19:10,QUIRÓS,TORIEZO,Quema Controlada,,,,
-0389-05042026,05/04/2026 11:46,Llanes,Ovio,Quema Controlada,,43.451108,-4.93917,
-0140-07042026,07/04/2026 6:31,Siero,,Quema Controlada,,,,
-,24/03/2026 18:50,,SENDA DESDE EL PUENTE ROMANO HACIA EL PONTÓN,Quema Controlada,,,,
-,22/03/2026 19:02,,TANES,Quema Controlada,,,,
-,24/03/2026 20:10,,GAMONAL,Quema Controlada,,,,
-,19/03/2026 11:10,,CORTINA,Quema Controlada,,,,
-,10/03/2026 12:59,,La Galguera,Quema Controlada,,,,
-,20/03/2026 7:29,,ALEVIA,Quema Controlada,,,,
-,03/03/2026 13:11,,PICO BUSTIELLO,Quema Controlada,,,,
-,21/03/2026 13:26,,CARROCERA,Quema Controlada,,,,
-,19/03/2026 12:32,,VILLAR,Quema Controlada,,,,
-,23/03/2026 17:49,,CARRETERA AS-17,Quema Controlada,,,,
-,12/03/2026 16:06,,Villaviciosa,  A-8 pk-350 , Viaducto de Sebrayo sentido Galicia,Quema Controlada,,,,
+Parte;Fecha_Inicio;Concejo;Localidad;Estado;IGP;Latitud;Longitud;Superficie
+0331-08042026;08/04/2026 13:16;Amieva;;Activo;;43.259473;-5.14385;
+0254-08042026;08/04/2026 11:31;Amieva;;Activo;;43.244857;-5.07363;
+0246-08042026;08/04/2026 11:16;Aller;;Activo;;43.117546;-5.58502;
+0152-08042026;08/04/2026 9:32;Cangas de Onís;Tarano;Activo;;43.363291;-5.03851;
+0131-08042026;08/04/2026 8:46;Piloña;;Activo;;43.31466;-5.32712;
+0142-08042026;08/04/2026 8:46;Llanes;;Extinguido;Moderado (1);43.391942;-4.80612;
+0034-08042026;08/04/2026 1:16;Llanera;SAN CUCAO;Falsa Alarma;;43.431346;-5.88277;
+0032-08042026;08/04/2026 1:16;Salas;POLES;Falsa Alarma;;43.399063;-6.26879;
+0022-08042026;08/04/2026 0:46;Cangas de Onís;SEGUENCO;Falsa Alarma;;43.327063;-5.07282;
+0005-08042026;08/04/2026 0:16;Cangas de Onís;TORIO;Activo;;43.336144;-5.08937;
+0938-07042026;08/04/2026 0:01;Piloña;VILLAMAYOR;Falsa Alarma;;;;
+0945-07042026;08/04/2026 0:01;Peñamellera Baja;ABANDAMES;Extinguido;;43.325567;-4.60222;5
+0901-07042026;07/04/2026 23:01;Cangas de Onís;NIEDA;Extinguido;;43.340775;-5.11223;
+0859-07042026;07/04/2026 22:01;Ribadesella;Abeo.;Extinguido;;43.469144;-5.11138;
+0825-07042026;07/04/2026 21:31;Peñamellera Baja;Cercanías del área recreativa del argayo. ;Extinguido;;43.319344;-4.54003;
+0820-07042026;07/04/2026 21:31;Llanes;Por encima del cementerio de San Roque del Acebal. ;Extinguido;;43.395278;-4.73612;15
+0963-06042026;07/04/2026 21:28;LENA;ALTO DE EL CORDAL;Extinguido;;;;
+0793-07042026;07/04/2026 20:46;Tineo;Calabazos. ;Falsa Alarma;;43.313278;-6.31343;
+0754-07042026;07/04/2026 20:16;Piloña;Valles;Falsa Alarma;;43.367568;-5.3138;
+0736-07042026;07/04/2026 20:01;Piloña;Riofabar. ;Activo;;43.278892;-5.35238;
+0734-07042026;07/04/2026 20:01;Piloña;;Falsa Alarma;;43.359573;-5.30619;
+0723-07042026;07/04/2026 19:46;Sariego;;Falsa Alarma;;43.415757;-5.52238;
+0703-07042026;07/04/2026 19:31;Piloña;;Falsa Alarma;;43.340493;-5.33284;
+0670-07042026;07/04/2026 19:16;Nava;Sierra de Peñamayor. ;Falsa Alarma;;43.338297;-5.49649;
+0669-07042026;07/04/2026 19:16;Cabranes;Entre Grandeño y Lodeña. ;Falsa Alarma;;43.391661;-5.38528;
+0639-07042026;07/04/2026 18:31;Nava;;Extinguido;;43.346521;-5.48394;
+0623-07042026;07/04/2026 18:16;Cabrales;Arenas de Cabrales, al sur de la localidad;Activo;;43.303125;-4.81685;
+0636-07042026;07/04/2026 18:16;Belmonte de Miranda;Cigüedres;Controlado;;43.228865;-6.27163;
+0625-07042026;07/04/2026 18:16;Cangas del Narcea;Ambres;Controlado;;43.174164;-6.40028;1,5
+0615-07042026;07/04/2026 18:01;Piloña;ARGANDENES;Extinguido;;43.366861;-5.33219;
+0610-07042026;07/04/2026 18:01;Nava;;Falsa Alarma;;43.354399;-5.44846;
+0599-07042026;07/04/2026 17:31;Piloña;;Falsa Alarma;;43.364618;-5.40738;
+0566-07042026;07/04/2026 17:01;Tineo;;Falsa Alarma;;43.3617;-6.65451;
+0551-07042026;07/04/2026 16:46;Cangas de Onís;La Riera. ;Extinguido;;43.324436;-5.07861;
+0540-07042026;07/04/2026 16:31;Morcín;La Collada;Extinguido;;43.268087;-5.87528;
+0525-07042026;07/04/2026 16:31;Belmonte de Miranda;Carricedo. ;Extinguido;;43.284386;-6.26379;1
+0526-07042026;07/04/2026 16:16;Ribadedeva;Noriega;Activo;;43.363939;-4.57276;
+0504-07042026;07/04/2026 16:01;Oviedo;Novales;Extinguido;;43.325458;-5.8263;
+0495-07042026;07/04/2026 15:46;Llanes;Purón y la Borbolla;Activo;;43.384758;-4.70884;
+0470-07042026;07/04/2026 15:31;Yernes y Tameza;Yernes;Extinguido;;43.279557;-6.11004;
+0438-07042026;07/04/2026 14:46;Piloña;El Pico;Extinguido;Bajo (0);43.311659;-5.23797;3
+0372-07042026;07/04/2026 13:21;Grado;Rubiano;Extinguido;;;;
+0354-07042026;07/04/2026 13:16;Parres;Tospe;Extinguido;Bajo (0);43.325783;-5.23904;
+0306-07042026;07/04/2026 12:31;Oviedo;;Extinguido;;43.345524;-5.97262;
+0268-07042026;07/04/2026 11:16;Oviedo;LAS CAMPAS;Extinguido;;43.365973;-5.88831;
+0230-07042026;07/04/2026 10:31;Peñamellera Alta;Caraves;Controlado;;43.316467;-4.72755;
+0206-07042026;07/04/2026 10:01;Ponga;Carangas;Controlado;;43.225096;-5.19126;
+0191-07042026;07/04/2026 9:01;Onís;Benia;Extinguido;;43.334766;-4.96813;
+0177-07042026;07/04/2026 8:31;Onís;;Extinguido;Bajo (0);43.334766;-4.96813;
+0851-06042026;07/04/2026 8:01;Cabrales;;Extinguido;;43.258904;-4.83662;
+0141-07042026;07/04/2026 6:46;Salas;Viescas;Falsa Alarma;;43.368388;-6.25569;
+0140-07042026;07/04/2026 6:31;Siero;;Quema Controlada;;;;
+0133-07042026;07/04/2026 6:16;Tineo;PIEDRATECHA;Extinguido;;43.330965;-6.469;
+0895-06042026;07/04/2026 5:46;Morcín;Sierra del Aramo;Extinguido;;43.063604;-5.90945;
+0954-06042026;07/04/2026 5:31;Grado;BASELGAS;Falsa Alarma;;43.310133;-6.06512;
+0079-07042026;07/04/2026 3:16;OVIEDO;PERLAVIA;Extinguido;;43.333499;-6.01336;
+0068-07042026;07/04/2026 2:31;Cangas de Onís;LABRA;Extinguido;;43.360902;-5.05827;
+0024-07042026;07/04/2026 0:46;Llanes;La Cerezal;Extinguido;;43.428479;-4.80686;
+0010-07042026;07/04/2026 0:31;Cangas de Onís;Cebia;Activo;Alto (2);43.394664;-5.07838;
+0014-07042026;07/04/2026 0:31;Grado;Ballongo/ Palacio / Pumarín;Extinguido;;43.308191;-6.02449;2
+0999-06042026;07/04/2026 0:01;Piloña;VALLES;Extinguido;Bajo (0);43.340493;-5.33284;8
+1001-06042026;07/04/2026 0:01;San Martín del Rey Aurelio;;Extinguido;;43.273383;-5.58933;
+1005-06042026;07/04/2026 0:01;Onís;AVÍN;Extinguido;;43.334779;-4.95161;2
+0994-06042026;06/04/2026 23:46;Amieva;San Román;Extinguido;Bajo (0);43.25703;-5.08901;
+0990-06042026;06/04/2026 23:31;Cangas de Onís;LA RIERA;Extinguido;Bajo (0);43.324436;-5.07861;5
+0982-06042026;06/04/2026 23:31;Gijón;;Extinguido;;43.509076;-5.77029;
+0963-06042026;06/04/2026 23:01;Lena;Alto del Cordal;Extinguido;Moderado (1);43.081426;-5.85938;28
+0935-06042026;06/04/2026 22:46;Cangas del Narcea;PERANDONES;Extinguido;Bajo (0);43.137573;-6.58644;
+0942-06042026;06/04/2026 22:46;Laviana;TOLIVIA;Extinguido;;43.211565;-5.58315;15
+0912-06042026;06/04/2026 22:16;Cangas del Narcea;Villacibrán;Extinguido;Bajo (0);43.200922;-6.61406;30
+0907-06042026;06/04/2026 22:16;Tineo;Truébano. ;Extinguido;Moderado (1);43.368107;-6.40757;4
+0913-06042026;06/04/2026 22:16;Parres;;Falsa Alarma;;43.368507;-5.22248;
+0902-06042026;06/04/2026 22:01;Cangas de Onís;Llano de Con;Extinguido;;43.328319;-5.0146;10
+0824-06042026;06/04/2026 22:00;CABRALES;CAMARMEÑA;Extinguido;;;;
+0864-06042026;06/04/2026 21:31;Cabrales;Asiego/ Puertas ;Controlado;;43.255712;-4.82961;2
+0867-06042026;06/04/2026 21:31;Cangas del Narcea;Cubo Puerto;Extinguido;;43.201781;-6.6547;
+0846-06042026;06/04/2026 21:16;Ponga;TARANES, TÍATORDOS;Extinguido;;43.18103;-5.17371;
+0849-06042026;06/04/2026 21:16;PILOÑA;LLAMES DE PARRES, EL PICO, TOSPE;Extinguido;Moderado (1);43.353885;-5.21549;15
+0836-06042026;06/04/2026 21:01;Piloña;COBAYAS;Extinguido;;43.318018;-5.44366;6
+0824-06042026;06/04/2026 20:46;Cabrales;Ortiguero, Las Estazadas;Extinguido;Moderado (1);43.329304;-4.95847;
+0818-06042026;06/04/2026 20:46;Belmonte de Miranda;CASTAÑERA;Extinguido;;43.294777;-6.22945;3
+0795-06042026;06/04/2026 20:31;Proaza;VILLAMEJIN;Extinguido;;43.239185;-6.01204;3
+0728-06042026;06/04/2026 19:01;Allande;Lantigo;Extinguido;;43.239893;-6.61757;
+0718-06042026;06/04/2026 19:01;Piloña;Cadapereda;Extinguido;;43.304146;-5.40271;
+0713-06042026;06/04/2026 18:46;Grado;LA CABORNA;Falsa Alarma;;43.380421;-6.01313;
+0701-06042026;06/04/2026 18:31;Tineo;Recta de la Vega. ;Extinguido;;43.339955;-6.4745;
+0648-06042026;06/04/2026 17:46;Langreo;;Extinguido;;43.327541;-5.72948;
+0610-06042026;06/04/2026 17:16;San Martín de Oscos;RON;Extinguido;;43.277125;-6.94764;
+0586-06042026;06/04/2026 16:46;Piloña;;Falsa Alarma;;43.31466;-5.32712;
+0580-06042026;06/04/2026 16:46;Piloña;Motosa, entre Pico Felgueroso y Peña del Águila;Extinguido;Moderado (1);43.292566;-5.43169;40
+0559-06042026;06/04/2026 16:31;Piloña;;Falsa Alarma;;43.288628;-5.33247;
+0560-06042026;06/04/2026 16:31;Belmonte de Miranda;;Falsa Alarma;;43.294777;-6.22945;
+0497-06042026;06/04/2026 15:16;Cudillero;;Falsa Alarma;;43.568551;-6.24822;
+0482-06042026;06/04/2026 15:01;Ponga;TARANES;Extinguido;Bajo (0);43.200632;-5.21177;
+0403-06042026;06/04/2026 13:46;Grado;;Extinguido;;43.262478;-6.15677;
+0309-06042026;06/04/2026 13:30;Illano;;Extinguido;;43.333253;-6.8648;
+0377-06042026;06/04/2026 13:30;San Martín del Rey Aurelio;;Extinguido;;43.276878;-5.6079;
+0315-06042026;06/04/2026 13:30;Allande;Almoño;Extinguido;;43.208217;-6.60039;50
+0335-06042026;06/04/2026 13:30;Grado;El Fresno. ;Extinguido;;43.368885;-6.12361;
+0268-06042026;06/04/2026 12:11;Cangas de Onís;Encima del pueblo de Tornín.;Extinguido;;;;
+0238-06042026;06/04/2026 11:19;GRADO;LOREDO;Extinguido;Moderado (1);;;3
+0160-06042026;06/04/2026 8:31;Amieva;SAN ROMÁN;Extinguido;;43.25703;-5.08901;
+0126-06042026;06/04/2026 7:01;Cangas del Narcea;Irrondo de Besullo;Extinguido;Moderado (1);;;
+0065-06042026;06/04/2026 2:31;Ribera de Arriba;BUEÑO;Falsa Alarma;;43.315483;-5.89706;
+0043-06042026;06/04/2026 1:31;Langreo;PICO ESCOBÍN/ PICO ARENERO;Falsa Alarma;;43.290493;-5.7009;
+0034-06042026;06/04/2026 1:16;San Martín del Rey Aurelio;EL CORVERO;Falsa Alarma;;43.318517;-5.59862;
+0014-06042026;06/04/2026 0:31;BELMONTE DE MIRANDA;SIERRA DEL PEDRORIO;Extinguido;;43.320529;-6.09706;400
+0010-06042026;06/04/2026 0:16;Grado;BUSTIELLO;Extinguido;;43.401071;-6.06965;
+0002-06042026;06/04/2026 0:16;Bimenes;MONTE CARROZAL;Falsa Alarma;;43.319339;-5.5598;
+1090-05042026;05/04/2026 22:31;Onís;AVÍN;Extinguido;;43.334779;-4.95161;12
+1080-05042026;05/04/2026 22:00;Grado;BASELGAS;Falsa Alarma;;43.310133;-6.06512;
+1054-05042026;05/04/2026 21:46;Piloña;COLLADA INCOSA;Extinguido;;43.31466;-5.32712;5
+1065-05042026;05/04/2026 21:46;Belmonte de Miranda;TIBLÓS;Extinguido;;43.282569;-6.21837;
+1036-05042026;05/04/2026 21:31;Villamanín;;Extinguido;;;;
+1017-05042026;05/04/2026 21:16;Zaragoza;;Extinguido;;;;
+1014-05042026;05/04/2026 21:01;Navia;;Falsa Alarma;;43.549516;-6.70563;
+0964-05042026;05/04/2026 20:16;Lena;PAJARES;Extinguido;;43.031356;-5.78155;
+0943-05042026;05/04/2026 20:01;Regueras (Las);ENTRE ANIA Y LAZANA;Extinguido;;43.404106;-5.96903;9
+0883-05042026;05/04/2026 19:01;Allande;Bustantigo/Leirosa y Paradiella (Tineo). ;Controlado;Bajo (0);43.347927;-6.69096;
+0876-05042026;05/04/2026 18:46;OVIEDO;VILLAR;Extinguido;;43.408654;-6.94687;
+0856-05042026;05/04/2026 18:31;Cangas del Narcea;;Extinguido;;43.200922;-6.61406;
+0772-05042026;05/04/2026 17:31;Cabrales;;Extinguido;;43.233071;-4.74808;
+0681-05042026;05/04/2026 16:16;Riosa;;Extinguido;;43.222577;-5.88082;
+0569-05042026;05/04/2026 14:31;Peñamellera Alta;CARAVES;Extinguido;;43.316467;-4.72755;5
+0540-05042026;05/04/2026 13:46;Tineo;EL PEDREGAL;Extinguido;;43.372399;-6.36686;3
+0502-05042026;05/04/2026 13:16;Lena;OTERO;Extinguido;;43.05213;-5.86644;
+0490-05042026;05/04/2026 13:01;Amieva;PEN;Falsa Alarma;;43.264002;-5.15389;
+0481-05042026;05/04/2026 12:46;Cabrales;CARREÑA;Extinguido;;43.316779;-4.84586;
+1207-04042026;05/04/2026 12:15;BELMONTE DE MIRANDA;CASTAÑERA;Extinguido;;;;45
+0389-05042026;05/04/2026 11:46;Llanes;Ovio;Quema Controlada;;43.451108;-4.93917;
+0631-04042026;04/04/2026 23:40;GRADO;SANTIANES;Extinguido;;;;
+1234-04042026;04/04/2026 22:46;Siero;VIO, HUERGO, AGUDA, PINZALES;Extinguido;;43.44601;-5.73907;
+1217-04042026;04/04/2026 22:31;Aller;LLAMAS;Extinguido;;43.106219;-5.57262;
+1207-04042026;04/04/2026 22:16;Belmonte de Miranda;CASTAÑERA;Extinguido;;43.236232;-6.25103;
+1176-04042026;04/04/2026 21:47;Cabrales;ASIEGO;Extinguido;;43.324815;-4.88594;
+1162-04042026;04/04/2026 21:31;Belmonte de Miranda;Antoñana;Activo;;43.200922;-6.61406;400
+1153-04042026;04/04/2026 21:31;Proaza;VILLAMEJÍN;Extinguido;;43.239185;-6.01204;
+1145-04042026;04/04/2026 21:16;Piloña;MONES;Extinguido;;43.35966;-5.28617;
+1142-04042026;04/04/2026 21:16;Cangas de Onís;CUERRES;Falsa Alarma;;43.373036;-5.00428;
+1090-04042026;04/04/2026 20:46;Proaza;SERANDI POR ENCIMA DE BUYERA;Extinguido;;43.25597;-5.99375;
+1061-04042026;04/04/2026 20:16;Proaza;LINARES;Extinguido;Bajo (0);43.280836;-6.02444;
+1064-04042026;04/04/2026 20:16;Corvera de Asturias;MOCÍN;Extinguido;;43.528189;-5.88816;
+1014-04042026;04/04/2026 19:46;Aller;LA CAMPUETA;Extinguido;Bajo (0);43.15177;-5.72693;
+0847-04042026;04/04/2026 17:16;Sobrescobio;LADINES;Extinguido;Bajo (0);43.203479;-5.44478;0,5
+0828-04042026;04/04/2026 17:01;Piloña;BIFORCOS;Extinguido;;43.31466;-5.32712;5
+0799-04042026;04/04/2026 16:46;Regueras (Las);ARECES;Extinguido;;43.407096;-5.99625;4
+0716-04042026;04/04/2026 15:31;Amieva;MOTA CETIN;Extinguido;;43.282495;-5.19473;
+0655-04042026;04/04/2026 14:31;Salas;TARANO;Extinguido;;43.434616;-6.25553;
+0631-04042026;04/04/2026 14:16;Grado;TEJEDO;Extinguido;;43.296176;-6.15011;
+0598-04042026;04/04/2026 13:46;Piloña;;Falsa Alarma;;43.309441;-5.44806;
+0602-04042026;04/04/2026 13:46;Piloña;CUERRIAS DE MAZA;Extinguido;;43.318018;-5.44366;
+0571-04042026;04/04/2026 13:46;Siero;HEVIA;Extinguido;;43.35689;-5.70008;
+0534-04042026;04/04/2026 13:01;Lena;;Extinguido;;43.066665;-5.82184;
+1014-04042026;04/04/2026 1:49;ALLER;LA CAMPUETA;Extinguido;;;;
+0757-03/04/2026;03/04/2026 23:50;DEGAÑA;CERREDO, DETRAS DEL BARRIO LOS TACHO;Extinguido;Moderado (1);;;
+1106-03042026;03/04/2026 21:46;Villamanín;;Extinguido;;;;
+1122-03042026;03/04/2026 21:35;OVIEDO;TRUBIA;Extinguido;;;;
+1108-03042026;03/04/2026 21:31;San Martín del Rey Aurelio;VILLAR;Falsa Alarma;;;;
+1089-03042026;03/04/2026 21:31;Regueras (Las);ARECES;Falsa Alarma;;43.407096;-5.99625;
+1075-03042026;03/04/2026 21:16;Valderrey;;Extinguido;;;;
+1067-03042026;03/04/2026 21:04;PROAZA;SERANDI;Extinguido;;;;
+0953-03042026;03/04/2026 19:16;QUIRÓS;SALCEDO;Extinguido;;;;
+0934-03042026;03/04/2026 19:10;QUIRÓS;TORIEZO;Quema Controlada;;;;
+0948-03042026;03/04/2026 19:06;BELMONTE DE MIRANDA;SAN MARTIN DE ONDES;Extinguido;Bajo (0);43.291569;-5.42479;
+0910-03042026;03/04/2026 18:54;PILOÑA;MELARDE;Extinguido;Bajo (0);;;2
+0903-03042026;03/04/2026 18:42;LENA;PIÑERA / LA CRUZ;Extinguido;;;;
+0795-03042026;03/04/2026 17:11;TEVERGA;SAN MARTIN;Extinguido;Bajo (0);;;
+0757-03042026;03/04/2026 16:46;Degaña;CERREDO;Extinguido;Moderado (1);42.946692;-6.4896;1
+0703-03042026;03/04/2026 15:51;PROAZA;LINARES;Extinguido;;;;
+0700-03042026;03/04/2026 15:50;PEÑAMELLERA BAJA;BORES-TOBES;Quema Controlada;;;;
+0700-03042026;03/04/2026 15:46;Peñamellera Baja;BORES-TOBES;Quema Controlada;;43.294224;-4.61242;
+0685-03042026;03/04/2026 15:28;PILOÑA;PUENTE MIERA, PRAERES DE NAVA;Extinguido;;;;20
+0648-03042026;03/04/2026 14:46;Oviedo;;Extinguido;;43.35693;-5.87486;
+0530-03042026;03/04/2026 13:16;Gijón;;Extinguido;;43.538926;-5.66572;
+0418-03042026;03/04/2026 11:46;Tineo;ORDIAL DE LA BARCA;Extinguido;;43.325053;-6.35545;
+0395-03042026;03/04/2026 11:31;Langreo;;Falsa Alarma;;43.310652;-5.71726;
+0373-03042026;03/04/2026 11:16;Grado;;Falsa Alarma;;43.320529;-6.09706;
+0157-03042026;03/04/2026 8:01;Cangas del Narcea;SIERO;Extinguido;Moderado (1);43.082684;-6.47802;5
+0703-03042026;03/04/2026 1:53;Proaza;Linares;Extinguido;;;;
+1104-02042026;02/04/2026 22:46;Candamo;;Falsa Alarma;;43.462138;-6.09695;
+0988-02042026;02/04/2026 21:16;Siero;;Extinguido;;43.381081;-5.7824;
+0788-02042026;02/04/2026 18:16;Lena;;Extinguido;;43.160115;-5.82892;
+0744-02042026;02/04/2026 17:31;Oviedo;;Extinguido;;43.35693;-5.87486;
+0868-01042026;01/04/2026 23:46;Gijón;;Extinguido;;43.538926;-5.66572;
+0486-01042026;01/04/2026 17:16;Cudillero;;Extinguido;;43.568551;-6.24822;
+0040-01042026;01/04/2026 2:01;Peñamellera Baja;;Falsa Alarma;;43.328408;-4.58575;
+0739-27032026;31/03/2026 16:46;Cangas del Narcea;;Extinguido;;43.035276;-6.57251;
